@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentelella Alela! | </title>
+    <title>Bethyl Labs Dashboard | </title>
 
     <!-- Bootstrap -->
     <link href="<?= base_url();?>bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
