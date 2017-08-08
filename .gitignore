@@ -13,6 +13,7 @@ composer.lock
 node_modules/*
 bower_components/*
 tmp/*
+upload/iis_logs/*
 
 user_guide_src/build/*
 user_guide_src/cilexer/build/*

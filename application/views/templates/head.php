@@ -29,6 +29,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <!-- Custom Theme Style -->
     <link href="<?= base_url();?>assets/build/css/custom.min.css" rel="stylesheet">
+
+	<link href="<?= base_url();?>assets/css/dash.css" rel="stylesheet">
 </head>
 
 <body class="nav-md">
