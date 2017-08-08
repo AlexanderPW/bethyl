@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="x_panel">
 				<div class="x_title">
 					<h2>IIS Server Logs</h2>
-					<ul class="nav navbar-right panel_toolbox">
+					<ul class="nav navbar-right panel_toolbox panel_toolbox_min">
 						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 						</li>
 						<li><a class="close-link"><i class="fa fa-close"></i></a>

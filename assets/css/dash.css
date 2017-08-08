@@ -1,3 +1,8 @@
+/* Toolbox Without Config */
+.panel_toolbox_min {
+    min-width:0px !important;
+}
+
 /* Mimic table appearance */
 div.table {
     display: table;
@@ -24,7 +29,7 @@ div.table .file-row:nth-child(odd) {
 
 /* Hide the progress bar when finished */
 #previews .file-row.dz-success .progress {
-    opacity: 0;
+   /* opacity: 0; */
     transition: opacity 0.3s linear;
 }
 

@@ -16,8 +16,9 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
 });
 
 myDropzone.on("success", function(file, response) {
-    console.log(file);
-    console.log(response);
+    var responseJSON = $.parseJSON(response);
+    $("#previews, .file-row.dz-success, .progress").html("<p><br>Successfully Imported "+responseJSON.insert
+        +" of "+responseJSON.count+" records.</p>");
 });
 
 myDropzone.on("addedfile", function(file) {
@@ -43,6 +44,7 @@ myDropzone.on("queuecomplete", function(progress) {
     document.querySelector("#total-progress").style.opacity = "0";
     document.querySelector("#total-progress").style.display = "none";
 });
+
 
 // Setup the buttons for all transfers
 // The "add files" button doesn't need to be setup because the config
