@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/* @property CI_Model            $model
+ */
 class Template {
 
     var $ci;
