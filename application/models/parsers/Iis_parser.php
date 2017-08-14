@@ -6,8 +6,9 @@ class Iis_parser extends CI_Model {
 
 
     public function insert($data) {
+        $this->load->database();
         $this->fields = $data;
-        $this->db->insert_batch('iis_logs', $this->fields);
+        $this->db->insert('iis_logs', $this->fields);
     }
 
     public function update() {
