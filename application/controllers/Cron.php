@@ -5,30 +5,16 @@ class Cron extends CI_Controller {
 
     public function importIisDir() {
         echo "Begin processing \n";
-        $path = FCPATH."/upload/iis_logs";
+        $path = FCPATH."upload/iis_logs";
         $this->load->library('file_iterator');
         $this->file_iterator->iterateIIS($path);
     }
 
-    public function iterateit()
-    {
-        register_shutdown_function([$this, 'importIisDir']);
-        $path = FCPATH . "/upload/iis_logs";
-        $this->load->library('file_iterator');
-
-    }
-
     public function importKnaDir() {
         echo "Begin processing \n";
-        $path = FCPATH."/upload/kna_logs";
+        $path = FCPATH."upload/kna_logs/";
         $this->load->library('file_iterator');
         $this->file_iterator->iterateKNA($path);
-
+        exit;
     }
-
-    public function message($to = 'World')
-    {
-        echo "Hello {$to}!".PHP_EOL;
-    }
-
 }

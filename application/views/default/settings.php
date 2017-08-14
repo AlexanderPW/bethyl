@@ -12,10 +12,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <span class="input-group-btn"><button type="button" class="btn btn-primary">Submit</button>
             </span>
 <?php
-$path = FCPATH.'upload/iis_batch.sh';
-$output = exec($path);
-var_dump($output);
-var_dump($path);
+$path = FCPATH."upload/kna_logs/kna1.csv"; // Name of your CSV file
+$this->load->library('file_iterator');
+$this->file_iterator->iterateKNA($path);
 
 ?>
         </div>

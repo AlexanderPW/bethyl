@@ -6,5 +6,3 @@ do
   php /Applications/MAMP/htdocs/test/dashboard/index.php /cron importiisdir
 done
 
-if [ $1 = ''
-ssconvert -S myexcel.xlsx myexcel.csv

@@ -12,20 +12,6 @@ class File_iterator
         $this->ci =& get_instance();
     }
 
-    public function getIisCount($path) {
-        $count = array();
-        $dir = new DirectoryIterator($path);
-        foreach ($dir as $fileinfo) {
-            $filename = $fileinfo->getFilename();
-            $ext = pathinfo($filename, PATHINFO_EXTENSION);
-            if ($ext == 'log') {
-                $count[] = array($filename);
-            }
-        }
-        return $count;
-    }
-
-
     public function iterateIIS($path)
     {
         $dir = new DirectoryIterator($path);
@@ -78,7 +64,6 @@ class File_iterator
                 $insert++;
                 $this->ci->iis_parser->insert($fields);
             }
-            //insert array into db in chunks
 
             $this->ci->logger->IISLog($fileName, $insert);
             echo "Return: " . $insert . " records successfully imported \n";
@@ -93,20 +78,26 @@ class File_iterator
         }
     }
 
-    public function iterateKNA($path)
-    {
+    public function iterateKNA($path) {
         $dir = new DirectoryIterator($path);
         foreach ($dir as $fileinfo) {
-            if (!$fileinfo->isDot()) {
-                $this->importKNA($fileinfo->getFilename());
+            $fileName = $fileinfo->getFilename();
+            $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+            if ($ext == 'csv') {
+                $this->importKNA($fileName, $path);
             }
         }
     }
 
-
-    public function importKNA($fileName)
+    public function importKNA($fileName, $path)
     {
-
+        $table = 'customer_logs';
+        $target = $path.$fileName;
+        $destination = FCPATH . "upload/complete/kna_logs/" . $fileName;
+        $this->ci->load->database();
+        $this->ci->load->model('parsers/csv_parser');
+        $this->ci->csv_parser->insertReplaceKNA($target, $table);
+        $this->moveComplete($target, $destination);
     }
 
     private function moveComplete($from, $to) {
