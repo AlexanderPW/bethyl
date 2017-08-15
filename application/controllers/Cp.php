@@ -13,7 +13,8 @@ class Cp extends CI_Controller
 
     public function imports()
     {
-        $this->template->load('default', 'imports');
+        $data = array('blah' => 'blahblah');
+        $this->template->load('default', 'imports', $data);
     }
 
     public function serverLog()
@@ -52,7 +53,7 @@ class Cp extends CI_Controller
  $insert++;
             }
             //insert array into db in chunks
-           $this->iis_parser->insert($fields);
+        //   $this->iis_parser->insert($fields);
             //response back to view
            echo json_encode(array('count' => count($fields), 'insert' => $insert));
         }

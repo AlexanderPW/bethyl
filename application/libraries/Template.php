@@ -12,10 +12,6 @@ class Template {
         $this->ci =& get_instance();
     }
 
-    public function some_method()
-    {
-        echo 'blahblah olajsdlkajsd';
-    }
 
     function load($tpl_view, $body_view = null, $data = null)
     {

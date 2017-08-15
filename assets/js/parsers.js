@@ -4,7 +4,7 @@ previewNode.id = "";
 var previewTemplate = previewNode.parentNode.innerHTML;
 previewNode.parentNode.removeChild(previewNode);
 
-var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+var myDropzone = new Dropzone("div.iis_log", { // Make the whole body a dropzone
     url: "/cp/serverlog", // Set the url
     thumbnailWidth: 80,
     thumbnailHeight: 80,
