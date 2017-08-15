@@ -19,6 +19,7 @@ class Csv_parser extends CI_Model {
         ");
         $rowCount = $this->db->count_all($table);
         $this->logger->KNAlog($fileName, $rowCount);
+        return $rowCount;
     }
 
     public function insertReplaceMara($path, $fileName, $table)
@@ -35,6 +36,7 @@ class Csv_parser extends CI_Model {
         ");
         $rowCount = $this->db->count_all($table);
         $this->logger->Maralog($fileName, $rowCount);
+        return $rowCount;
     }
 
     public function insertReplace901($path, $fileName, $table)
@@ -52,6 +54,7 @@ class Csv_parser extends CI_Model {
         ");
         $rowCount = $this->db->count_all($table);
         $this->logger->s901log($fileName, $rowCount);
+        return $rowCount;
     }
 
 }

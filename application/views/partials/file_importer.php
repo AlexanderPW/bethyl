@@ -26,7 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <i class="glyphicon glyphicon-upload"></i>
                         <span>Start Import</span>
                     </button>
-                    <button type="reset" class="btn btn-warning cancel">
+                    <button type="reset" class="btn btn-warning cancel-<?=$mod_class;?>">
                         <i class="glyphicon glyphicon-ban-circle"></i>
                         <span>Clear Import</span>
                     </button>
@@ -54,7 +54,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     <div>
                         <p class="size" data-dz-size></p>
-                        <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                        <div class="progress progress-striped progress progress-striped-<?=$mod_class;?> active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
                             <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <i class="glyphicon glyphicon-upload"></i>
                             <span>Start</span>
                         </button>
-                        <button data-dz-remove class="btn btn-warning cancel">
+                        <button data-dz-remove class="btn btn-warning cancel-<?=$mod_class;?>">
                             <i class="glyphicon glyphicon-ban-circle"></i>
                             <span>Cancel</span>
                         </button>

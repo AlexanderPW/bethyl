@@ -67,7 +67,6 @@ class File_iterator
             }
 
             $this->ci->logger->IISLog($fileName, $insert);
-            echo "Return: " . $insert . " records successfully imported \n";
             $this->moveComplete($targetFile, $destination);
             $file    = null;
             $fields  = null;
@@ -75,6 +74,7 @@ class File_iterator
             gc_enable();
             gc_collect_cycles();
             sleep(7);
+            return $insert;
         }
     }
 
@@ -85,6 +85,7 @@ class File_iterator
             $ext = pathinfo($fileName, PATHINFO_EXTENSION);
             if ($ext == 'csv') {
                 $this->importKNA($fileName, $path);
+                exit;
             }
         }
     }
@@ -96,8 +97,9 @@ class File_iterator
         $destination = FCPATH . "upload/complete/kna_logs/" . $fileName;
         $this->ci->load->database();
         $this->ci->load->model('parsers/csv_parser');
-        $this->ci->csv_parser->insertReplaceKNA($target, $fileName, $table);
+        $count = $this->ci->csv_parser->insertReplaceKNA($target, $fileName, $table);
         $this->moveComplete($target, $destination);
+        return $count;
     }
 
     public function iterateMara($path) {
@@ -107,6 +109,7 @@ class File_iterator
             $ext = pathinfo($fileName, PATHINFO_EXTENSION);
             if ($ext == 'csv') {
                 $this->importMara($fileName, $path);
+                exit;
             }
         }
     }
@@ -118,8 +121,9 @@ class File_iterator
         $destination = FCPATH . "upload/complete/mara_logs/" . $fileName;
         $this->ci->load->database();
         $this->ci->load->model('parsers/csv_parser');
-        $this->ci->csv_parser->insertReplaceMara($target, $fileName, $table);
+        $count = $this->ci->csv_parser->insertReplaceMara($target, $fileName, $table);
         $this->moveComplete($target, $destination);
+        return $count;
     }
 
     public function iterate901($path) {
@@ -129,6 +133,7 @@ class File_iterator
             $ext = pathinfo($fileName, PATHINFO_EXTENSION);
             if ($ext == 'csv') {
                 $this->import901($fileName, $path);
+                exit;
             }
         }
     }
@@ -140,11 +145,12 @@ class File_iterator
         $destination = FCPATH . "upload/complete/901_logs/" . $fileName;
         $this->ci->load->database();
         $this->ci->load->model('parsers/csv_parser');
-        $this->ci->csv_parser->insertReplace901($target, $fileName, $table);
+        $count = $this->ci->csv_parser->insertReplace901($target, $fileName, $table);
         $this->moveComplete($target, $destination);
+        return $count;
     }
 
-    private function moveComplete($from, $to) {
+    public function moveComplete($from, $to) {
         rename($from, $to);
 }
 
