@@ -3,39 +3,43 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <script>
 // Get the template HTML and remove it from the doument
-var previewNode = document.querySelector("#template");
+Dropzone.autoDiscover = false;
+var previewNode = document.querySelector("#<?=$mod_class?>");
 previewNode.id = "";
 var previewTemplate = previewNode.parentNode.innerHTML;
 previewNode.parentNode.removeChild(previewNode);
 
-var myDropzone = new Dropzone("div.<?=$mod_class;?>", { // Make the whole body a dropzone
+var <?=$mod_class;?> = new Dropzone("div.<?=$mod_class;?>", { // Make the whole body a dropzone
 url: "/cp/<?=$url;?>", // Set the url
+acceptedFiles: "<?=$format?>",
+autoDiscover:false,
+maxFiles:1,
 thumbnailWidth: 80,
 thumbnailHeight: 80,
 parallelUploads: 1,
 previewTemplate: previewTemplate,
 autoQueue: false, // Make sure the files aren't queued until manually added
-previewsContainer: "#previews", // Define the container to display the previews
-clickable: ".fileinput-button", // Define the element that should be used as click trigger to select files.
+previewsContainer: "#previews-<?=$mod_class?>", // Define the container to display the previews
+clickable: ".fileinput-button-<?=$mod_class;?>", // Define the element that should be used as click trigger to select files.
 });
 
-myDropzone.on("success", function(file, response) {
+<?=$mod_class;?>.on("success", function(file, response) {
 var responseJSON = $.parseJSON(response);
-$("#previews, .file-row.dz-success, .progress").html("<p><br>Successfully Imported "+responseJSON.insert
+$("#previews-<?=$mod_class;?>, .file-row.dz-success, .progress").html("<p><br>Successfully Imported "+responseJSON.insert
                                                              +" of "+responseJSON.count+" records.</p>");
 });
 
-myDropzone.on("addedfile", function(file) {
+<?=$mod_class;?>.on("addedfile", function(file) {
 // Hookup the start button
-file.previewElement.querySelector(".start").onclick = function() { myDropzone.enqueueFile(file); };
+file.previewElement.querySelector(".start-<?=$mod_class;?>").onclick = function() { <?=$mod_class;?>.enqueueFile(file); };
 });
 
 // Update the total progress bar
-myDropzone.on("totaluploadprogress", function(progress) {
+<?=$mod_class;?>.on("totaluploadprogress", function(progress) {
 document.querySelector("#total-progress .progress-bar").style.width = progress + "%";
 });
 
-myDropzone.on("sending", function(file) {
+<?=$mod_class;?>.on("sending", function(file) {
 // Show the total progress bar when upload starts
 document.querySelector("#total-progress").style.opacity = "1";
 document.querySelector("#total-progress").style.display = "inherit";
@@ -44,7 +48,7 @@ file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
 });
 
 // Hide the total progress bar when nothing's uploading anymore
-myDropzone.on("queuecomplete", function(progress) {
+<?=$mod_class;?>.on("queuecomplete", function(progress) {
 document.querySelector("#total-progress").style.opacity = "0";
 document.querySelector("#total-progress").style.display = "none";
 });
@@ -54,9 +58,9 @@ document.querySelector("#total-progress").style.display = "none";
 // The "add files" button doesn't need to be setup because the config
 // `clickable` has already been specified.
 document.querySelector("#actions .start").onclick = function() {
-myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED));
+<?=$mod_class;?>.enqueueFiles(<?=$mod_class;?>.getFilesWithStatus(Dropzone.ADDED));
 };
 document.querySelector("#actions .cancel").onclick = function() {
-myDropzone.removeAllFiles(true);
+<?=$mod_class;?>.removeAllFiles(true);
 };
 </script>

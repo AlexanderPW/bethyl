@@ -13,8 +13,31 @@ class Cp extends CI_Controller
 
     public function imports()
     {
-        $data = array('blah' => 'blahblah');
+        $data = array('recents' => $this->getUploadStatus());
         $this->template->load('default', 'imports', $data);
+    }
+
+    private function getUploadStatus() {
+        return array(
+            'last_iis' => $this->getLastIIS(),
+            'last_kna' => $this->getLastKNA(),
+            'last_mara' => $this->getLastMara()
+        );
+    }
+
+    private function getLastIIS() {
+        $query = $this->db->query("SELECT * FROM `logs` WHERE action = '1' ORDER BY `id` DESC LIMIT 1");
+        return $query->row();
+    }
+
+    private function getLastKNA() {
+        $query = $this->db->query("SELECT * FROM `logs` WHERE action = '2' ORDER BY `id` DESC LIMIT 1");
+        return $query->row();
+    }
+
+    private function getLastMara() {
+        $query = $this->db->query("SELECT * FROM `logs` WHERE action = '3' ORDER BY `id` DESC LIMIT 1");
+        return $query->row();
     }
 
     public function serverLog()

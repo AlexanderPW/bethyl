@@ -22,6 +22,7 @@ class File_iterator
               $this->importIIS($filename);
                 gc_enable();
                 gc_collect_cycles();
+                exit;
             }
         }
     }
@@ -74,7 +75,6 @@ class File_iterator
             gc_enable();
             gc_collect_cycles();
             sleep(7);
-            exit;
         }
     }
 
@@ -96,7 +96,51 @@ class File_iterator
         $destination = FCPATH . "upload/complete/kna_logs/" . $fileName;
         $this->ci->load->database();
         $this->ci->load->model('parsers/csv_parser');
-        $this->ci->csv_parser->insertReplaceKNA($target, $table);
+        $this->ci->csv_parser->insertReplaceKNA($target, $fileName, $table);
+        $this->moveComplete($target, $destination);
+    }
+
+    public function iterateMara($path) {
+        $dir = new DirectoryIterator($path);
+        foreach ($dir as $fileinfo) {
+            $fileName = $fileinfo->getFilename();
+            $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+            if ($ext == 'csv') {
+                $this->importMara($fileName, $path);
+            }
+        }
+    }
+
+    public function importMara($fileName, $path)
+    {
+        $table = 'material';
+        $target = $path.$fileName;
+        $destination = FCPATH . "upload/complete/mara_logs/" . $fileName;
+        $this->ci->load->database();
+        $this->ci->load->model('parsers/csv_parser');
+        $this->ci->csv_parser->insertReplaceMara($target, $fileName, $table);
+        $this->moveComplete($target, $destination);
+    }
+
+    public function iterate901($path) {
+        $dir = new DirectoryIterator($path);
+        foreach ($dir as $fileinfo) {
+            $fileName = $fileinfo->getFilename();
+            $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+            if ($ext == 'csv') {
+                $this->import901($fileName, $path);
+            }
+        }
+    }
+
+    public function import901($fileName, $path)
+    {
+        $table = 'sales';
+        $target = $path.$fileName;
+        $destination = FCPATH . "upload/complete/901_logs/" . $fileName;
+        $this->ci->load->database();
+        $this->ci->load->model('parsers/csv_parser');
+        $this->ci->csv_parser->insertReplace901($target, $fileName, $table);
         $this->moveComplete($target, $destination);
     }
 
