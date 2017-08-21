@@ -7,4 +7,19 @@ class Dashboard extends CI_Controller {
     {
         $this->template->load('default', 'entry');
     }
+
+    public function salesByYear() {
+        $this->load->model('sales');
+        echo json_encode($this->sales->getSalesByYears());
+    }
+
+    public function top5ProductsMonth() {
+        $this->load->model('sales');
+        echo json_encode($this->sales->getTop5ProductsByMonth());
+    }
+
+    public function top5CustomersMonth() {
+        $this->load->model('sales');
+        echo json_encode($this->sales->getTop5CustomersByMonth());
+    }
 }

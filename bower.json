@@ -74,7 +74,7 @@
   },
   "dependencies": {
     "gentelella": "^1.4.0"
-  }
+  },
   "resolutions": {
     "jquery": "^2.2.3",
     "fastclick": "^1.0.6"

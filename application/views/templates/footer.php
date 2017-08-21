@@ -37,10 +37,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?= base_url();?>bower_components/Flot/jquery.flot.time.js"></script>
 <script src="<?= base_url();?>bower_components/Flot/jquery.flot.stack.js"></script>
 <script src="<?= base_url();?>bower_components/Flot/jquery.flot.resize.js"></script>
+<script src="<?= base_url();?>assets/js/jquery.flot.time.js"></script>
 <!-- Flot plugins -->
 <script src="<?= base_url();?>bower_components/flot.orderbars/js/jquery.flot.orderBars.js"></script>
 <script src="<?= base_url();?>bower_components/flot-spline/js/jquery.flot.spline.min.js"></script>
 <script src="<?= base_url();?>bower_components/flot.curvedlines/curvedLines.js"></script>
+<script src="<?= base_url();?>bower_components/flot.tooltip.pib/js/jquery.flot.tooltip.min.js"></script>
+
 <!-- DateJS -->
 <script src="<?= base_url();?>bower_components/DateJS/build/date.js"></script>
 <!-- JQVMap -->
@@ -51,8 +54,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?= base_url();?>bower_components/moment/min/moment.min.js"></script>
 <script src="<?= base_url();?>bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 
-<!-- Custom Theme Scripts -->
-<script src="<?= base_url();?>assets/build/js/custom.min.js"></script>
+<!-- Custom Theme Scripts <script src="<?= base_url();?>assets/build/js/custom.min.js"></script> -->
+
+<script src="<?= base_url();?>assets/js/custom.js"></script>
+
+<script src="<?= base_url();?>assets/js/charts.js"></script>
 
 </body>
 </html>
