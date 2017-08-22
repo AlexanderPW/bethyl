@@ -5,7 +5,10 @@ class Dashboard extends CI_Controller {
 
     public function index()
     {
-        $this->template->load('default', 'entry');
+        $data = array(
+            'script' => '<script src='.base_url().'assets/js/entry.js></script>'
+        );
+        $this->template->load('default', 'entry', $data);
     }
 
     public function salesByYear() {
@@ -21,5 +24,10 @@ class Dashboard extends CI_Controller {
     public function top5CustomersMonth() {
         $this->load->model('sales');
         echo json_encode($this->sales->getTop5CustomersByMonth());
+    }
+
+    public function top5CampaignsMonth() {
+        $this->load->model('traffic');
+        echo json_encode($this->traffic->getTop5CampaignsByMonth());
     }
 }
