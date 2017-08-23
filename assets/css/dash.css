@@ -47,3 +47,28 @@ div.table .file-row:nth-child(odd) {
 #previews .file-row.dz-success .delete {
     display: block;
 }
+
+
+/* override some datatable uglyness */
+
+.dataTables_processing {
+    background-color:#FFFFFF !important;
+    height:60px !important;
+}
+
+.dataTables_paginate a {
+    color:#666666 !important;
+    cursor: pointer !important;
+}
+
+.dataTables_paginate .current {
+    font-weight: 600 !important;
+    color: #0D3349 !important;
+}
+
+.dataTables_filter input[type="search"] {
+    border: 1px solid #ccc !important;
+    height:25px !important;
+}
+
+

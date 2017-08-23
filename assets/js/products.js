@@ -92,12 +92,12 @@ if ($("#sales-product-bar-holder").length){
     });
 }
 
-var table;
+var product_table;
 
 $(document).ready(function() {
 
     //datatables
-    table = $('#table123').DataTable({
+    product_table = $('#product-sales').DataTable({
 
         "processing": true, //Feature control the processing indicator.
         "serverSide": true, //Feature control DataTables' server-side processing mode.
@@ -105,7 +105,7 @@ $(document).ready(function() {
 
         // Load data for the table's content from an Ajax source
         "ajax": {
-            "url": "products/ajax_list",
+            "url": "products/getdatatable",
             "type": "POST"
         },
 

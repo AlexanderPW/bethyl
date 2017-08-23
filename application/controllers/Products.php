@@ -39,22 +39,17 @@ class Products extends CI_Controller {
 
 
 
-    public function ajax_list()
+    public function getDatatable()
     {
         $list = $this->product->get_datatables();
         $data = array();
         $no = $_POST['start'];
-        foreach ($list as $customers) {
+        foreach ($list as $products) {
             $no++;
             $row = array();
             $row[] = $no;
-            $row[] = $customers->FirstName;
-            $row[] = $customers->LastName;
-            $row[] = $customers->phone;
-            $row[] = $customers->address;
-            $row[] = $customers->city;
-            $row[] = $customers->country;
-
+            $row[] = $products->material;
+            $row[] = $products->ionet2;
             $data[] = $row;
         }
 

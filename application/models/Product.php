@@ -38,9 +38,9 @@ class Product extends CI_Model
 
 
 
-    var $table = 'customers';
-    var $column_order = array(null, 'FirstName','LastName','phone','address','city','country'); //set column field database for datatable orderable
-    var $column_search = array('FirstName','LastName','phone','address','city','country'); //set column field database for datatable searchable
+    var $table = 'sales';
+    var $column_order = array(null, 'material', 'ionet2'); //set column field database for datatable orderable
+    var $column_search = array('material', 'ionet2'); //set column field database for datatable searchable
     var $order = array('id' => 'asc'); // default order
 
     public function __construct()

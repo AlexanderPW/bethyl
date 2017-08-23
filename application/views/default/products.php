@@ -1,7 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-    <!-- top tiles -->
+<link href="<?=base_url();?>assets/css/jquery.datatables.css" rel="stylesheet">
+
+ <!-- top tiles -->
 <!--
     <div class="row tile_count">
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
@@ -140,50 +142,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<div class="clearfix"></div>
 	</div>
 	<div class="x_content">
+<div id="datatable_wrapper" class="dataTables_wrapper"></div>
+		<table id="product-sales" class="table table-striped hover" cellspacing="0" width="100%">
+			<thead>
+			<tr>
+				<th>No</th>
+				<th>Product</th>
+				<th>Net Sales</th>
+			</tr>
+			</thead>
+			<tbody>
+			</tbody>
 
-		<div class="well" style="overflow: auto">
-			<div class="col-md-7">
-				<div id="reportrange_right" class="pull-left" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
-					<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-					<span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
-				</div>
-			</div>
-			<div class="col-md-5">
-				<p>Date Range Picker with opening to right and left</p>
-			</div>
-		</div>
+			<tfoot>
+
+			</tfoot>
+		</table>
+	</div>
 
 	</div>
 </div>
 <!-- /datatable -->
 
-<table id="table123" class="display" cellspacing="0" width="100%">
-	<thead>
-	<tr>
-		<th>No</th>
-		<th>First Name</th>
-		<th>Last Name</th>
-		<th>Phone</th>
-		<th>Address</th>
-		<th>City</th>
-		<th>Country</th>
-	</tr>
-	</thead>
-	<tbody>
-	</tbody>
-
-	<tfoot>
-	<tr>
-		<th>No</th>
-		<th>First Name</th>
-		<th>Last Name</th>
-		<th>Phone</th>
-		<th>Address</th>
-		<th>City</th>
-		<th>Country</th>
-	</tr>
-	</tfoot>
-</table>
 
 
 

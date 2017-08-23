@@ -26,8 +26,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link href="<?= base_url();?>bower_components/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
     <!-- bootstrap-daterangepicker -->
     <link href="<?= base_url();?>bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+	<!-- Custom Theme Style -->
+	<link href="<?=base_url();?>bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom Theme Style -->
     <link href="<?= base_url();?>assets/build/css/custom.min.css" rel="stylesheet">
 
 	<link href="<?= base_url();?>assets/css/dash.css" rel="stylesheet">
