@@ -38,6 +38,11 @@ function getbaryear(barObj) {
    return barObj;
 }
 
+function getbarday(barObj) {
+    barObj = barObj[0].year;
+    return barObj;
+}
+
 function getcombobardata(barObj, param) {
     var j = 0;
     for(j=0;j<barObj.length;j++){

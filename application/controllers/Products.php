@@ -12,32 +12,34 @@ class Products extends CI_Controller {
     public function index()
     {
         $data = array('script' => array('<script src='.base_url().'assets/js/products.js></script>',
-          '<script src='.base_url().'bower_components/datatables.net/js/jquery.dataTables.min.js></script>'
-        ));
+          '<script src='.base_url().'bower_components/datatables.net/js/jquery.dataTables.min.js></script>',
+            '<script src='.base_url().'bower_components/select2/dist/js/select2.js></script>'
+          ));
         $this->template->load('default', 'products', $data);
     }
 
-    public function salesByYear() {
+    public function salesByMonth() {
         $this->load->model('product');
-        echo json_encode($this->product->getSalesBy3Years());
+        echo json_encode($this->product->getSalesByMonth());
     }
 
-    public function top5ProductsMonth() {
-        $this->load->model('sales');
-        echo json_encode($this->sales->getTop5ProductsByMonth());
+    public function productsLastWeek() {
+        $this->load->model('product');
+        echo json_encode($this->product->getProductsLastWeek());
     }
 
-    public function top5CustomersMonth() {
-        $this->load->model('sales');
-        echo json_encode($this->sales->getTop5CustomersByMonth());
+    public function productsByYear() {
+        echo json_encode($this->product->getProductsByYear());
     }
 
-    public function top5CampaignsMonth() {
-        $this->load->model('traffic');
-        echo json_encode($this->traffic->getTop5CampaignsByMonth());
+    public function productsCustom() {
+        $this->load->model('product');
+        $dateRange = array(
+        'endD' => $this->input->get('end_range'),
+        'startD' => $this->input->get('start_range')
+    );
+        echo json_encode($this->product->getProductsCustom($dateRange));
     }
-
-
 
     public function getDatatable()
     {
@@ -45,12 +47,14 @@ class Products extends CI_Controller {
         $data = array();
         $no = $_POST['start'];
         foreach ($list as $products) {
-            $no++;
             $row = array();
             $row[] = $no;
+            $row[] = date('M d, Y', strtotime($products->date));
             $row[] = $products->material;
-            $row[] = $products->ionet2;
+            $row[] = $products->name;
+            $row[] = $products->billingqty;
             $data[] = $row;
+            $no++;
         }
 
         $output = array(
@@ -61,5 +65,10 @@ class Products extends CI_Controller {
         );
         //output to json format
         echo json_encode($output);
+    }
+
+    public function getCustomers() {
+        $this->load->model('customer');
+        echo json_encode($this->customer->getCustomers());
     }
 }

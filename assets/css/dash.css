@@ -71,4 +71,18 @@ div.table .file-row:nth-child(odd) {
     height:25px !important;
 }
 
+/* Select2 Fix */
+.select2 {
+    width:100% !important;
+}
+
+/* pretty up our date picker */
+#product_date_selector {
+    height:38px !important;
+    overflow: hidden !important;
+    border-color: #aaa !important;
+    border-radius: 5px;
+    padding: 8px 10px !important;
+}
+
 
