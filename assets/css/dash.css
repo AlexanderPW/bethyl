@@ -78,6 +78,7 @@ div.table .file-row:nth-child(odd) {
 
 /* pretty up our date picker */
 #product_date_selector {
+    width:100%;
     height:38px !important;
     overflow: hidden !important;
     border-color: #aaa !important;

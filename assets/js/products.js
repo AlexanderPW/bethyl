@@ -4,15 +4,16 @@ var productPlotLabels;
 var newTicks;
 var customerData;
 var $customerEventSelect = $("#product-sales-filter1");
+var $productEventSelect = $("#product-sales-filter2");
 var product_table;
 var product_start;
 product_start = moment().startOf('month').format('YYYY-MM-DD');
 var product_end;
 product_end = moment().endOf('month').format('YYYY-MM-DD');
 var customerId;
+var productId;
 var date_label;
 var date_selector;
-
 
 if ($("#sales-product-bar-holder").length){
     $.get( "/products/salesBymonth", returnFilters(), function( data ) {
@@ -141,7 +142,7 @@ function init_daterangepicker_product() {
         ranges: {
             'Last Week': [moment().subtract(6, 'days'), moment()],
             'This Month': [moment().startOf('month'), moment().endOf('month')],
-            'This Year': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            'This Year': [moment().startOf('year'), moment().endOf('year')]
         },
         opens: 'right',
         buttonClasses: ['btn btn-default'],
@@ -469,6 +470,12 @@ function getChartByCustom(){
     });
 }
 
+function resetTicks(newbarlabels) {
+    newTicks = productPlot.getAxes();
+    newTicks.xaxis.options.ticks = newbarlabels;
+}
+
+//Filters
 function getCustomerList() {
     $('#product-sales-filter1').select2({
         allowClear: true,
@@ -487,23 +494,36 @@ function getCustomerList() {
     });
 }
 
-//Filters
+function getProductList() {
+    $('#product-sales-filter2').select2({
+        allowClear: true,
+        placeholder: 'Filter by Product',
+        ajax: {
+            url: '/products/getproducts',
+            dataType: 'json',
+            delay: 250,
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        }
+    });
+}
+
 function returnFilters() {
     var d;
     d = {
         'start_range' : product_start,
         'end_range' : product_end,
-        'customer' : customerId
+        'customer' : customerId,
+        'product' : productId
     }
     return d;
 }
 
-function resetTicks(newbarlabels) {
-    newTicks = productPlot.getAxes();
-    newTicks.xaxis.options.ticks = newbarlabels;
-}
-
-function selectReturnId (name, evt) {
+function customerReturnId (name, evt) {
 JSON.stringify(evt.params, function (key, value) {
             customerId = value.data.id;
             product_table.ajax.reload();
@@ -511,11 +531,24 @@ JSON.stringify(evt.params, function (key, value) {
         });
 }
 
+function productReturnId (name, evt) {
+    JSON.stringify(evt.params, function (key, value) {
+        productId = value.data.id;
+        product_table.ajax.reload();
+        chartTypeSelect(date_selector);
+    });
+}
+
 function clearCustomer() {
     customerId = '';
     product_table.ajax.reload();
     chartTypeSelect(date_selector);
-    console.log(date_selector);
+}
+
+function clearProduct() {
+    productId = '';
+    product_table.ajax.reload();
+    chartTypeSelect(date_selector);
 }
 
 $(document).ready(function() {
@@ -550,8 +583,12 @@ $(document).ready(function() {
 
     //select2
     getCustomerList();
-    $customerEventSelect.on("select2:select", function (e) { selectReturnId("select2:select", e); });
+    $customerEventSelect.on("select2:select", function (e) { customerReturnId("select2:select", e); });
     $customerEventSelect.on("select2:unselect", function (e) { clearCustomer(); });
+
+    getProductList();
+    $productEventSelect.on("select2:select", function (e) { productReturnId("select2:select", e); });
+    $productEventSelect.on("select2:unselect", function (e) { clearProduct(); });
 });
 
 

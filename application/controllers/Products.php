@@ -71,4 +71,8 @@ class Products extends CI_Controller {
         $this->load->model('customer');
         echo json_encode($this->customer->getCustomers());
     }
+
+    public function getProducts() {
+        echo json_encode($this->product->getProducts());
+    }
 }

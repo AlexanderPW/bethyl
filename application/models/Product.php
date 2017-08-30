@@ -3,6 +3,19 @@
 class Product extends CI_Model
 {
 
+    public function getProducts() {
+        $this->db->select('material AS id, material as text');
+        $this->db->from('material');
+        if (!empty($_GET['q'])) {
+            $this->db->like('material', $_GET['q']);
+        }
+        $this->db->limit(10);
+
+        $customers = $this->db->get();
+
+        return $customers->result_array();
+    }
+
     public function getSalesByMonth()
     {
         $results  = $this->db->query("
@@ -102,6 +115,7 @@ group by sort;");
   from sales
   WHERE date <= date_format(Now(), '%Y-12-31')
         and date >= date_format(Now(), '%Y-01-01')
+            ".$this->getWhereClauses()."
   group by DATE_FORMAT(date, '%Y-%m')
   union all
   select date_format(Now(), '%Y-12-01'), 0
@@ -139,6 +153,7 @@ group by sort;"
   from sales
   WHERE date <= date_format(Now(), '%Y-12-31')- interval 1 year
   and date >= date_format(Now(), '%Y-01-01')- interval 1 year
+      ".$this->getWhereClauses()."
   group by DATE_FORMAT(date, '%Y-%m')
   union all
   select date_format(Now(), '%Y-12-01')- interval 1 year, 0
@@ -176,6 +191,7 @@ group by sort;"
   from sales
   WHERE date <= date_format(Now(), '%Y-12-31')- interval 2 year
   and date >= date_format(Now(), '%Y-01-01')- interval 2 year
+      ".$this->getWhereClauses()."
   group by DATE_FORMAT(date, '%Y-%m')
   union all
   select date_format(Now(), '%Y-12-01')- interval 2 year, 0
@@ -411,6 +427,11 @@ order by label asc;
             $this->db->where('customer_number =', $_POST['customer']);
         }
 
+        //Product Field
+        if(!empty($_POST['product'])) {
+            $this->db->where('material =', $_POST['product']);
+        }
+
         //Ordering
         if(isset($_POST['order']))
         {
@@ -424,9 +445,14 @@ order by label asc;
     }
 
     private function getWhereClauses(){
+        $wheres = '';
         if(isset($_GET['customer']) && !empty($_GET['customer'])) {
-            return "and soldtopt = '".$_GET['customer']."'";
+            $wheres = "and soldtopt = '".$_GET['customer']."'";
         }
+        if(isset($_GET['product']) && !empty($_GET['product'])) {
+            $wheres .= "and material = '".$_GET['product']."'";
+        }
+        return $wheres;
     }
 
     function get_datatables()
