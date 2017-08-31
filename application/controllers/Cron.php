@@ -65,4 +65,10 @@ class Cron extends CI_Controller {
         $this->file_iterator->iterate901($path);
         exit;
     }
+
+    public function testParse() {
+        $shit = 'utm_source=pt&utm_campaign=bulk&utm_medium=banner';
+        echo $this->GetBetween('utm_medium=', '&', $shit);
+    }
+
 }

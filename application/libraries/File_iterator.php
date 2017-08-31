@@ -53,10 +53,16 @@ class File_iterator
             $insert = 0;
 
             foreach ($logFile->getEntries() as &$entry) {
+                $variableParse = $entry->getRequestQuery();
                 $fields = array(
                     'datetime'    => $entry->getDateTime(),
                     'url'         => $entry->getRequestUri(),
-                    'variable'    => $entry->getRequestQuery(),
+                    'variable'    => $variableParse,
+                    'campaign'    => $this->GetBetween('utm_campaign=', '&', $variableParse),
+                    'source'      => $this->GetBetween('utm_source=', '&', $variableParse),
+                    'medium'      => $this->GetBetween('utm_medium=', '&', $variableParse),
+                    'referrer'    => $this->GetBetween('referrer=', '&', $variableParse),
+                    'target'      => $this->GetBetween('target=', '&', $variableParse),
                     'visiting_ip' => $entry->getClientIp(),
                     'agent'       => $entry->getClientUserAgent(),
                     'response'    => $entry->getResponseStatusCode(),
@@ -153,6 +159,17 @@ class File_iterator
     public function moveComplete($from, $to) {
         rename($from, $to);
 }
+
+    function GetBetween($str1="",$str2="",$search){
+        $temp1 = strpos($pool,$var1)+strlen($var1);
+        $result = substr($pool,$temp1,strlen($pool));
+        $dd=strpos($result,$var2);
+        if($dd == 0){
+            $dd = strlen($result);
+        }
+
+        return substr($result,0,$dd);
+    }
 
 
 }
