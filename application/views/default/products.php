@@ -173,6 +173,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 <!-- /datatable -->
 
+<!-- Traffic Modal -->
+<? $this->load->view('partials/traffic_modal');?>
+
 
 
 

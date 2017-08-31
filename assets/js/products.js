@@ -14,6 +14,7 @@ var customerId;
 var productId;
 var date_label;
 var date_selector;
+var traffic_table;
 
 if ($("#sales-product-bar-holder").length){
     $.get( "/products/salesBymonth", returnFilters(), function( data ) {
@@ -117,7 +118,6 @@ function init_daterangepicker_product() {
     if( typeof ($.fn.daterangepicker) === 'undefined'){ return; }
 
     var cb = function(start, end, label) {
-        console.log(start.toISOString(), end.toISOString(), label);
         date_label = label;
         $('#product_date_selector span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
     };
@@ -167,10 +167,8 @@ function init_daterangepicker_product() {
     $('#product_date_selector').daterangepicker(optionSet1, cb);
 
     $('#product_date_selector').on('show.daterangepicker', function() {
-        console.log("show event fired");
     });
     $('#product_date_selector').on('hide.daterangepicker', function() {
-        console.log("hide event fired");
     });
     $('#product_date_selector').on('apply.daterangepicker', function(ev, picker) {
         product_start = picker.startDate.format('YYYY-MM-DD');
@@ -183,7 +181,6 @@ function init_daterangepicker_product() {
     });
 
     $('#product_date_selector').on('cancel.daterangepicker', function(ev, picker) {
-        console.log("cancel event fired");
     });
 
     $('#options1').click(function() {
@@ -411,7 +408,6 @@ function getChartByYear(){
 function getChartByCustom(){
     $.get( "/products/productscustom", returnFilters(), function( data ) {
         var bar_json = $.parseJSON(data);
-        console.log(bar_json);
         var newbarlabels = bar_json[0].slice();
         newbarlabels = getbarlabels(newbarlabels, 'name');
         var newbardata = bar_json[0].slice();
@@ -550,6 +546,55 @@ function clearProduct() {
     product_table.ajax.reload();
     chartTypeSelect(date_selector);
 }
+
+function initTrafficModal(e) {
+    var infoModal = $('#trafficModal');
+    infoModal.modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+};
+
+function initTrafficDatatable(e) {
+
+    traffic_table = $('#traffic-datatable').DataTable({
+
+        "processing": true, //Feature control the processing indicator.
+        "serverSide": true, //Feature control DataTables' server-side processing mode.
+        "order": [], //Initial no order.
+
+        // Load data for the table's content from an Ajax source
+        "ajax": {
+            "url": "ajax_controller/gettrafficdatatable",
+            "type": "POST",
+            data: function (d) {
+                Object.assign(d, {'id': e.dataset.id, 'date': e.dataset.date});
+                return d;
+            }
+        },
+        "destroy": true,
+        //Set column definition initialisation properties.
+        "columnDefs": [
+            {
+                "targets": [ 0 ], //first column / numbering column
+                "orderable": false, //set not orderable
+                "visible": false
+            },
+        ],
+
+    });
+}
+
+// Event handling for ajax dom selection
+$(document).on('click', ".modal-toggle", function () {
+    initTrafficModal();
+    initTrafficDatatable(this);
+});
+
+//clear datatable after closing modal
+$(document).on('click', '[data-dismiss="modal"]', function () {
+    traffic_table.clear();
+} );
 
 $(document).ready(function() {
     //datatables
