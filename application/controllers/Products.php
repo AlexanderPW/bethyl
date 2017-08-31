@@ -53,6 +53,7 @@ class Products extends CI_Controller {
             $row[] = $products->material;
             $row[] = $products->name;
             $row[] = $products->billingqty;
+            $row[] = ($this->product->checkRelatedTraffic($products->date, $products->material) ? 1 : 0);
             $data[] = $row;
             $no++;
         }

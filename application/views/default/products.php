@@ -45,7 +45,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <h3><i class="fa fa-shopping-bag"></i> Sales by Product</h3>
 <br>
 
-
 <div class="row">
 
 	<!-- top chart -->
@@ -158,6 +157,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<th>Product</th>
 				<th>Customer</th>
 				<th>Quantity</th>
+				<th>Traffic</th>
 			</tr>
 			</thead>
 			<tbody>

@@ -380,6 +380,17 @@ order by label asc;
 
     }
 
+    public function checkRelatedTraffic($date, $material) {
+       $dateFrom = date('Y-m-d', strtotime("$date - 1 day"));
+       $results = $this->db->query("
+select ifnull ((select id from traffic_logs where datetime > '".$dateFrom." 00:00:00' and datetime < '".$date." 23:59:59'
+and url like '%".$material."%' limit 1), 0) as traffic;"
+       );
+
+        $result = $results->row();
+        return $result->traffic;
+    }
+
     var $table = 'sales';
     var $column_order = array(null, 'sales.date', 'sales.material', 'sales.billingqty'); //set column field database for datatable orderable
     var $column_search = array('sales.date','sales.material', 'sales.billingqty'); //set column field database for datatable searchable
