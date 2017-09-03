@@ -29,8 +29,9 @@ class File_iterator
 
     public function importIIS($fileName)
     {
-        $targetDir   = FCPATH . "upload/iis_logs/";
-        $targetFile  = $targetDir . $fileName;
+        $this->load->model('settings');
+        $targetDir  = FCPATH.$this->settings->getPath('iis-location');
+        $targetFile  = $targetDir.'/'.$fileName;
         $destination = FCPATH . "upload/complete/iis_logs/" . $fileName;
         $fields      = null;
         $this->ci->load->model('parsers/iis_parser');
@@ -99,7 +100,7 @@ class File_iterator
     public function importKNA($fileName, $path)
     {
         $table = 'customer_logs';
-        $target = $path.$fileName;
+        $target = $path.'/'.$fileName;
         $destination = FCPATH . "upload/complete/kna_logs/" . $fileName;
         $this->ci->load->database();
         $this->ci->load->model('parsers/csv_parser');
@@ -123,7 +124,7 @@ class File_iterator
     public function importMara($fileName, $path)
     {
         $table = 'material';
-        $target = $path.$fileName;
+        $target = $path.'/'.$fileName;
         $destination = FCPATH . "upload/complete/mara_logs/" . $fileName;
         $this->ci->load->database();
         $this->ci->load->model('parsers/csv_parser');
@@ -147,11 +148,35 @@ class File_iterator
     public function import901($fileName, $path)
     {
         $table = 'sales';
-        $target = $path.$fileName;
+        $target = $path.'/'.$fileName;
         $destination = FCPATH . "upload/complete/901_logs/" . $fileName;
         $this->ci->load->database();
         $this->ci->load->model('parsers/csv_parser');
         $count = $this->ci->csv_parser->insertReplace901($target, $fileName, $table);
+        $this->moveComplete($target, $destination);
+        return $count;
+    }
+
+    public function iterateIp($path) {
+        $dir = new DirectoryIterator($path);
+        foreach ($dir as $fileinfo) {
+            $fileName = $fileinfo->getFilename();
+            $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+            if ($ext == 'csv') {
+                $this->importIp($fileName, $path);
+                exit;
+            }
+        }
+    }
+
+    public function importIp($fileName, $path)
+    {
+        $table = 'customer_ip';
+        $target = $path.'/'.$fileName;
+        $destination = FCPATH . "upload/complete/ip_logs/" . $fileName;
+        $this->ci->load->database();
+        $this->ci->load->model('parsers/csv_parser');
+        $count = $this->ci->csv_parser->insertReplaceIp($target, $fileName, $table);
         $this->moveComplete($target, $destination);
         return $count;
     }

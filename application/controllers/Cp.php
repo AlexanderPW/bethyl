@@ -19,12 +19,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $this->template->load('default', 'imports', $data);
             }
 
-            private function getUploadStatus() {
+            private function getUploadStatus()
+            {
                 return array(
-                    'last_iis' => $this->getLastIIS(),
-                    'last_kna' => $this->getLastKNA(),
+                    'last_iis'  => $this->getLastIIS(),
+                    'last_kna'  => $this->getLastKNA(),
                     'last_mara' => $this->getLastMara(),
-                    'last_901' => $this->getLast901()
+                    'last_901'  => $this->getLast901(),
+                    'last_ip'   => $this->getLastIP()
                 );
             }
 
@@ -49,15 +51,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             }
 
             private function getLastIP() {
-                $query = $this->db->query("SELECT * FROM `logs` WHERE action = '4' ORDER BY `id` DESC LIMIT 1");
+                $query = $this->db->query("SELECT * FROM `logs` WHERE action = '5' ORDER BY `id` DESC LIMIT 1");
                 return $query->row();
             }
 
             public function serverLog()
             {
-                $targetDir  = FCPATH."upload/iis_logs/";
-                $fileName   = $_FILES['file']['name'];
-                $targetFile = $targetDir . $fileName;
+                $this->load->model('settings');
+                $targetDir  = FCPATH.$this->settings->getPath('iis-location');
+                $fileName   = str_replace(' ', '_', $_FILES['file']['name']);
+                $targetFile = $targetDir .'/'. $fileName;
                 $this->load->library('file_iterator');
                 $count = 0;
                 $fields = null;
@@ -71,10 +74,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             public function customerLog()
             {
-                $targetDir  = FCPATH."upload/kna_logs/";
-                $fileName   = $_FILES['file']['name'];
+                $this->load->model('settings');
+                $targetDir  = FCPATH.$this->settings->getPath('kna-location');
+                $fileName   = str_replace(' ', '_', $_FILES['file']['name']);
                 $destination = FCPATH."upload/complete/kna_logs/".$fileName;
-                $targetFile = $targetDir . $fileName;
+                $targetFile = $targetDir .'/'. $fileName;
                 $this->load->library('file_iterator');
                 $count = 0;
                 $fields = null;
@@ -91,10 +95,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             public function materialLog()
             {
-                $targetDir  = FCPATH."upload/mara_logs/";
-                $fileName   = $_FILES['file']['name'];
+                $this->load->model('settings');
+                $targetDir  = FCPATH.$this->settings->getPath('mara-location');
+                $fileName   = str_replace(' ', '_', $_FILES['file']['name']);
                 $destination = FCPATH."upload/complete/mara_logs/".$fileName;
-                $targetFile = $targetDir . $fileName;
+                $targetFile = $targetDir .'/'. $fileName;
                 $this->load->library('file_iterator');
                 $count = 0;
                 $fields = null;
@@ -111,10 +116,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             public function salesLog()
             {
-                $targetDir  = FCPATH."upload/901_logs/";
-                $fileName   = $_FILES['file']['name'];
+                $this->load->model('settings');
+                $targetDir  = FCPATH.$this->settings->getPath('sales-location');
+                $fileName   = str_replace(' ', '_', $_FILES['file']['name']);
                 $destination = FCPATH."upload/complete/901_logs/".$fileName;
-                $targetFile = $targetDir . $fileName;
+                $targetFile = $targetDir .'/'. $fileName;
                 $this->load->library('file_iterator');
                 $count = 0;
                 $fields = null;
@@ -123,6 +129,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     exec("/usr/local/bin/ssconvert ".$targetFile." ".$targetFile.".csv 2>&1", $output);
                     $csvName = $fileName.'.csv';
                     $count = $this->file_iterator->import901($csvName, $targetDir);
+                    $this->file_iterator->moveComplete($targetFile, $destination);
+                }
+                //response back to view
+                echo json_encode(array('count' => $count, 'insert' => $count));
+            }
+
+            public function ipLog()
+            {
+                $this->load->model('settings');
+                $targetDir  = FCPATH.$this->settings->getPath('ip-location');
+                $fileName   = str_replace(' ', '_', $_FILES['file']['name']);
+                $destination = FCPATH."upload/complete/ip_logs/".$fileName;
+                $targetFile = $targetDir .'/'. $fileName;
+                $this->load->library('file_iterator');
+                $count = 0;
+                $fields = null;
+
+                if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)) {
+                    exec("/usr/local/bin/ssconvert ".$targetFile." ".$targetFile.".csv 2>&1", $output);
+                    $csvName = $fileName.'.csv';
+                    $count = $this->file_iterator->importIp($csvName, $targetDir);
                     $this->file_iterator->moveComplete($targetFile, $destination);
                 }
                 //response back to view

@@ -4,7 +4,6 @@ class Csv_parser extends CI_Model {
 
     public $fields;
 
-
     public function insertReplaceKNA($path, $fileName, $table)
     {
         $this->load->library('logger');
@@ -54,6 +53,23 @@ class Csv_parser extends CI_Model {
         ");
         $rowCount = $this->db->count_all($table);
         $this->logger->s901log($fileName, $rowCount);
+        return $rowCount;
+    }
+
+    public function insertReplaceIp($path, $fileName, $table)
+    {
+        $this->load->library('logger');
+        $this->db->query(
+            "LOAD DATA LOCAL INFILE '".$path."' 
+            REPLACE INTO TABLE ".$table."
+            FIELDS TERMINATED BY ','
+            ENCLOSED BY '\"'
+            LINES TERMINATED BY '\\n' 
+            IGNORE 1 LINES
+            (`ip`, `customer`)
+        ");
+        $rowCount = $this->db->count_all($table);
+        $this->logger->Iplog($fileName, $rowCount);
         return $rowCount;
     }
 

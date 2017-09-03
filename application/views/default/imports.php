@@ -56,11 +56,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <?
     //MARA
     $data['log_title'] = 'Customer IP Import';
-    $data['mod_class'] = 'mara_import';
+    $data['mod_class'] = 'ip_import';
     $data['format'] = '.xlsx';
-    $data['url'] = 'materiallog';
-    $data['last_time'] = date("F jS, Y", strtotime($recents['last_mara']->timestamp));
-    $data['last_qty'] = $recents['last_mara']->data;
+    $data['url'] = 'iplog';
+    $data['last_time'] = date("F jS, Y", strtotime($recents['last_ip']->timestamp));
+    $data['last_qty'] = $recents['last_ip']->data;
     $this->load->view('partials/file_importer', $data);
     $this->load->view('partials/file_uploader', $data);
 

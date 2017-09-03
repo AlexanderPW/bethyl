@@ -7,6 +7,7 @@ const IIS_Log = 1;
 const KNA_Log = 2;
 const Mara_Log = 3;
 const s901_Log = 4;
+const Ip_Log = 5;
 
     protected $path;
 
@@ -48,6 +49,15 @@ const s901_Log = 4;
     public function s901log($fileName, $Records) {
         $fields = array(
             'action' => self::s901_Log,
+            'data' => $Records,
+            'name' => $fileName
+        );
+        $this->ci->db->insert('logs', $fields);
+    }
+
+    public function Iplog($fileName, $Records) {
+        $fields = array(
+            'action' => self::Ip_Log,
             'data' => $Records,
             'name' => $fileName
         );
