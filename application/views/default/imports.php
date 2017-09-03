@@ -4,7 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <script src="<?=base_url();?>/bower_components/dropzone/dist/min/dropzone.min.js"></script>
 
-<h3>Data Center</h3>
+<h3><i class="fa fa-database"></i> Data Center</h3>
+
 	<div class="row">
 		<?
 		//IIS
@@ -50,6 +51,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $this->load->view('partials/file_importer', $data);
         $this->load->view('partials/file_uploader', $data);
         ?>
+	</div>
+	<div class="row">
+    <?
+    //MARA
+    $data['log_title'] = 'Customer IP Import';
+    $data['mod_class'] = 'mara_import';
+    $data['format'] = '.xlsx';
+    $data['url'] = 'materiallog';
+    $data['last_time'] = date("F jS, Y", strtotime($recents['last_mara']->timestamp));
+    $data['last_qty'] = $recents['last_mara']->data;
+    $this->load->view('partials/file_importer', $data);
+    $this->load->view('partials/file_uploader', $data);
+
+    ?>
 	</div>
 
 

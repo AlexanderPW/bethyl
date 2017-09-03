@@ -7,7 +7,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             public function settings()
             {
-                $this->template->load('default', 'settings');
+                $data = array('script' => '<script src='.base_url().'assets/js/cp.js></script>',
+                    'logLocations' => $this->getLogLocations(),
+                    'trafficGroup' => $this->getTrafficOption());
+                $this->template->load('default', 'settings', $data);
             }
 
             public function imports()
@@ -41,6 +44,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             }
 
             private function getLast901() {
+                $query = $this->db->query("SELECT * FROM `logs` WHERE action = '4' ORDER BY `id` DESC LIMIT 1");
+                return $query->row();
+            }
+
+            private function getLastIP() {
                 $query = $this->db->query("SELECT * FROM `logs` WHERE action = '4' ORDER BY `id` DESC LIMIT 1");
                 return $query->row();
             }
@@ -119,6 +127,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 }
                 //response back to view
                 echo json_encode(array('count' => $count, 'insert' => $count));
+            }
+
+            public function setSetting() {
+                if($_POST['type'] && $_POST['val']) {
+                    $this->load->model('settings');
+                    $this->settings->setSetting();
+                }
+            }
+
+            public function getLogLocations() {
+                $this->load->model('settings');
+                return $this->settings->getLogLocations();
+            }
+
+            public function getTrafficOption() {
+                $this->load->model('settings');
+                return $this->settings->getTrafficOptions();
             }
 }
 

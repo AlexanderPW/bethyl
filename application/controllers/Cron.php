@@ -67,8 +67,22 @@ class Cron extends CI_Controller {
     }
 
     public function testParse() {
-        $shit = 'utm_source=pt&utm_campaign=bulk&utm_medium=banner';
-        echo $this->GetBetween('utm_medium=', '&', $shit);
+
+        $shit = 'referrer=Cell+Biology+Chromatin+Remodeling&target=RbBP7';
+       echo  $this->GetBetween('campaign=', '&', $shit);
     }
 
+    function GetBetween($var1="",$var2="",$pool){
+        if(preg_match("/$var1/", $pool)) {
+        $temp1 = strpos($pool,$var1)+strlen($var1);
+        $result = substr($pool,$temp1,strlen($pool));
+        $dd=strpos($result,$var2);
+        if($dd == 0){
+            $dd = strlen($result);
+        }
+
+        return substr($result,0,$dd);
+        }
+        return null;
+    }
 }

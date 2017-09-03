@@ -160,16 +160,18 @@ class File_iterator
         rename($from, $to);
 }
 
-    function GetBetween($str1="",$str2="",$search){
-        $temp1 = strpos($pool,$var1)+strlen($var1);
-        $result = substr($pool,$temp1,strlen($pool));
-        $dd=strpos($result,$var2);
-        if($dd == 0){
-            $dd = strlen($result);
+    public function GetBetween($var1="",$var2="",$pool){
+        if(preg_match("/$var1/", $pool)) {
+            $temp1 = strpos($pool,$var1)+strlen($var1);
+            $result = substr($pool,$temp1,strlen($pool));
+            $dd=strpos($result,$var2);
+            if($dd == 0){
+                $dd = strlen($result);
+            }
+
+            return substr($result,0,$dd);
         }
-
-        return substr($result,0,$dd);
+        return null;
     }
-
 
 }
