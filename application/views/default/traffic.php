@@ -42,7 +42,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 -->
     <!-- /top tiles -->
 
-<h3><i class="fa fa-user"></i> Sales by Customer</h3>
+<h3><i class="fa fa-bar-chart"></i> Traffic Report</h3>
 <br>
 
 <div class="row">
@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel fixed_height_320">
 			<div class="x_title">
-				<h2>Sales by Customer</h2>
+				<h2>Traffic by click</h2>
 				<ul class="nav navbar-right panel_toolbox">
 					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 					</li>
@@ -70,7 +70,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<div id="product-search-status>"<h3>Total Sales Comparison</h3></div><br>
+				<div id="product-search-status>"<h3>Total CTR Comparison</h3></div><br>
 				<div class="clearfix"></div>
 				<div id="sales-product-bar-holder" style="width:100%;height:200px">
 
@@ -85,7 +85,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!-- form date pickers -->
 <div class="x_panel" style="">
 	<div class="x_title">
-		<h2>Customer Filters</h2>
+		<h2>Traffic Filters</h2>
 		<ul class="nav navbar-right panel_toolbox">
 			<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 			</li>
@@ -113,11 +113,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</div>
 			</div>
 			<div class="col-md-4 col-sm-12 col-xs-12">
-				<select id='customer-sales-filter1'>
+				<select id='traffic-sales-filter1'>
 				</select>
 			</div>
 			<div class="col-md-4 col-sm-12 col-xs-12">
-				<select id='customer-sales-filter2'>
+				<select id='traffic-sales-filter2'>
+				</select>
+			</div>
+			<div class="col-md-4 col-sm-12 col-xs-12">
+				<select id='traffic-sales-filter3'>
+				</select>
+			</div>
+			<div class="col-md-4 col-sm-12 col-xs-12">
+				<select id='traffic-sales-filter4'>
+				</select>
+			</div>
+			<div class="col-md-4 col-sm-12 col-xs-12">
+				<select id='traffic-sales-filter5'>
 				</select>
 			</div>
 		</div>
@@ -129,7 +141,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!-- form datatable -->
 <div class="x_panel" style="">
 	<div class="x_title">
-		<h2>Customer Sales Table</h2>
+		<h2>Traffic Table</h2>
 		<ul class="nav navbar-right panel_toolbox">
 			<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 			</li>
@@ -154,10 +166,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<tr>
 				<th>No</th>
 				<th>Date</th>
-				<th>Product</th>
+				<th>Url</th>
+				<th>Campaign</th>
+				<th>IP</th>
 				<th>Customer</th>
-				<th>Quantity</th>
-				<th>Traffic</th>
 			</tr>
 			</thead>
 			<tbody>

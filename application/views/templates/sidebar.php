@@ -22,12 +22,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <ul class="nav side-menu">
                     <li><a href="/"><i class="fa fa-home"></i> Dashboard</a>
                     </li>
-                    <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
+                   <!-- <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="tables.html">Tables</a></li>
                             <li><a href="tables_dynamic.html">Table Dynamic</a></li>
                         </ul>
-                    </li>
+                    </li> -->
                     <li><a><i class="fa fa-bar-chart-o"></i> Data Presentation <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="/products">Products</a></li>

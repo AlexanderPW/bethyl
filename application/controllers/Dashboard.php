@@ -27,7 +27,7 @@ class Dashboard extends CI_Controller {
     }
 
     public function top5CampaignsMonth() {
-        $this->load->model('traffic');
-        echo json_encode($this->traffic->getTop5CampaignsByMonth());
+        $this->load->model('traffic_model');
+        echo json_encode($this->traffic_model->getTop5CampaignsByMonth());
     }
 }
