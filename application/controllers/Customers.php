@@ -7,6 +7,7 @@ class Customers extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('product');
+        $this->load->model('customer');
     }
 
     public function index()
@@ -23,13 +24,13 @@ class Customers extends CI_Controller {
         echo json_encode($this->customer->getSalesByMonth());
     }
 
-    public function productsLastWeek() {
-        $this->load->model('product');
-        echo json_encode($this->product->getProductsLastWeek());
+    public function customersLastWeek() {
+        $this->load->model('customer');
+        echo json_encode($this->customer->getCustomersLastWeek());
     }
 
-    public function productsByYear() {
-        echo json_encode($this->product->getProductsByYear());
+    public function customersByYear() {
+        echo json_encode($this->customer->getCustomersByYear());
     }
 
     public function productsCustom() {

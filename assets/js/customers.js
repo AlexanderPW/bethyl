@@ -198,7 +198,7 @@ function chartTypeSelect(type) {
 }
 
 function getChartByWeek() {
-    $.get("/products/productslastweek", returnFilters(), function (data) {
+    $.get("/customers/customerslastweek", returnFilters(), function (data) {
 
         var bar_json = $.parseJSON(data);
 
@@ -225,32 +225,14 @@ function getChartByWeek() {
             [{
                 label: newbaryear,
                 data: newbardata,
-                bars: {
-                    show: true,
-                    barWidth: 0.2,
-                    order: 1
-                    // align: "left"
-                },
                 color: 'red'
             }, {
                 label: newbaryear2,
                 data: newbardata2,
-                bars: {
-                    show: true,
-                    barWidth: 0.2,
-                    order: 2
-                    // align: "right",
-                }
             },
                 {
                     label: newbaryear3,
                     data: newbardata3,
-                    bars: {
-                        show: true,
-                        barWidth: 0.2,
-                        order: 3
-                        //  align: "right",
-                    }
                 }];
 
 
@@ -306,7 +288,7 @@ function getChartByMonth(){
 }
 
 function getChartByYear(){
-    $.get( "/products/productsbyyear", returnFilters(), function( data ) {
+    $.get( "/customers/customersbyyear", returnFilters(), function( data ) {
         var bar_json = $.parseJSON(data);
 
         var newbarlabels = bar_json[0].slice();
@@ -332,32 +314,14 @@ function getChartByYear(){
             [{
                 label: newbaryear,
                 data: newbardata,
-                bars: {
-                    show: true,
-                    barWidth: 0.2,
-                    order: 1
-                    // align: "left"
-                },
                 color: 'red'
             }, {
                 label: newbaryear2,
                 data: newbardata2,
-                bars: {
-                    show: true,
-                    barWidth: 0.2,
-                    order: 2
-                    // align: "right",
-                }
             },
                 {
                     label: newbaryear3,
                     data: newbardata3,
-                    bars: {
-                        show: true,
-                        barWidth: 0.2,
-                        order: 3
-                        //  align: "right",
-                    }
                 }];
 
         resetTicks(newbarlabels);

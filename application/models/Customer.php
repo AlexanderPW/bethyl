@@ -3,6 +3,20 @@
 class Customer extends CI_Model
 {
 
+    public function getCustomers(){
+
+        $this->db->select('customer_number AS id, name as text');
+        $this->db->from('customer_logs');
+        if (!empty($_GET['q'])) {
+            $this->db->like('name', $_GET['q']);
+        }
+        $this->db->limit(10);
+
+        $customers = $this->db->get();
+
+        return $customers->result_array();
+    }
+
     public function getSalesByMonth()
     {
         $results  = $this->db->query("select label, data, year, ordered from(
@@ -10,6 +24,7 @@ class Customer extends CI_Model
     FROM sales
     WHERE date <= last_day(NOW())
     and date >= Date_add(date_format(Now(), '%Y-%m-01'),interval - 6 month)
+    ".$this->getWhereClauses()."
     GROUP BY DATE_FORMAT(date, '%Y-%m')
     union all
     select date_format(Now(), '%M'), 0, 0,date_format(Now(), '%m')
@@ -33,6 +48,7 @@ class Customer extends CI_Model
  SELECT DATE_FORMAT(date, '%M') AS label, SUM(netsales2) as data, DATE_FORMAT(date, '%Y') AS year, DATE_FORMAT(date, '%m') as ordered    FROM sales
     WHERE date <= last_day(NOW()) - interval 1 year
     and date >= Date_add(date_format(Now(), '%Y-%m-01') - interval 1 year,interval - 6 month)
+    ".$this->getWhereClauses()."
     GROUP BY DATE_FORMAT(date, '%Y-%m')
    union all
     select date_format(Now(), '%M'), 0, 0,date_format(Now(), '%m')
@@ -56,6 +72,7 @@ class Customer extends CI_Model
  SELECT DATE_FORMAT(date, '%M') AS label, SUM(netsales2) as data, DATE_FORMAT(date, '%Y') AS year, DATE_FORMAT(date, '%m') as ordered    FROM sales
     WHERE date <= last_day(NOW()) - interval 2 year
     and date >= Date_add(date_format(Now(), '%Y-%m-01') - interval 2 year,interval - 6 month)
+    ".$this->getWhereClauses()."
     GROUP BY DATE_FORMAT(date, '%Y-%m')
    union all
     select date_format(Now(), '%M'), 0, 0,date_format(Now(), '%m')
@@ -84,29 +101,139 @@ class Customer extends CI_Model
 
     }
 
-    public function getCustomers(){
+    public function getCustomersByYear() {
+        $results = $this->db->query("
+            SELECT DATE_FORMAT(date, '%M') AS label, qty as data, DATE_FORMAT(date, '%Y') AS year, DATE_FORMAT(date, '%Y-%m') AS sort
+  from
+  (
+      select `date`, sum(netsales2) AS qty
+  from sales
+  WHERE date <= date_format(Now(), '%Y-12-31')
+        and date >= date_format(Now(), '%Y-01-01')
+            ".$this->getWhereClauses()."
+  group by DATE_FORMAT(date, '%Y-%m')
+  union all
+  select date_format(Now(), '%Y-12-01'), 0
+  union all
+  select date_format(Now(), '%Y-11-01'), 0
+  union all
+  select date_format(Now(), '%Y-10-01'), 0
+  union all
+  select date_format(Now(), '%Y-09-01'), 0
+  union all
+  select date_format(Now(), '%Y-08-01'), 0
+  union all
+  select date_format(Now(), '%Y-07-01'), 0
+  union all
+  select date_format(Now(), '%Y-06-01'), 0
+  union all
+  select date_format(Now(), '%Y-05-01'), 0
+  union all
+  select date_format(Now(), '%Y-04-01'), 0
+  union all
+  select date_format(Now(), '%Y-03-01'), 0
+  union all
+  select date_format(Now(), '%Y-02-01'), 0
+  union all
+  select date_format(Now(), '%Y-01-01'), 0
+) x
+group by sort;"
+        );
 
-        $this->db->select('customer_number AS id, name as text');
-        $this->db->from('customer_logs');
-        if (!empty($_GET['q'])) {
-            $this->db->like('name', $_GET['q']);
-        }
-        $this->db->limit(10);
+        $results2 = $this->db->query("
+  SELECT DATE_FORMAT(date, '%M') AS label, qty as data, DATE_FORMAT(date, '%Y') AS year, DATE_FORMAT(date, '%Y-%m') AS sort
+  from
+  (
+  select `date`, sum(netsales2) AS qty
+  from sales
+  WHERE date <= date_format(Now(), '%Y-12-31')- interval 1 year
+  and date >= date_format(Now(), '%Y-01-01')- interval 1 year
+      ".$this->getWhereClauses()."
+  group by DATE_FORMAT(date, '%Y-%m')
+  union all
+  select date_format(Now(), '%Y-12-01')- interval 1 year, 0
+  union all
+  select date_format(Now(), '%Y-11-01')- interval 1 year, 0
+  union all
+  select date_format(Now(), '%Y-10-01')- interval 1 year, 0
+  union all
+  select date_format(Now(), '%Y-09-01')- interval 1 year, 0
+  union all
+  select date_format(Now(), '%Y-08-01')- interval 1 year, 0
+  union all
+  select date_format(Now(), '%Y-07-01')- interval 1 year, 0
+  union all
+  select date_format(Now(), '%Y-06-01')- interval 1 year, 0
+  union all
+  select date_format(Now(), '%Y-05-01')- interval 1 year, 0
+  union all
+  select date_format(Now(), '%Y-04-01')- interval 1 year, 0
+  union all
+  select date_format(Now(), '%Y-03-01')- interval 1 year, 0
+  union all
+  select date_format(Now(), '%Y-02-01')- interval 1 year, 0
+  union all
+  select date_format(Now(), '%Y-01-01')- interval 1 year, 0
+) x
+group by sort;"
+        );
 
-        $customers = $this->db->get();
+        $results3 = $this->db->query("
+  SELECT DATE_FORMAT(date, '%M') AS label, qty as data, DATE_FORMAT(date, '%Y') AS year, DATE_FORMAT(date, '%Y-%m') AS sort
+  from
+  (
+  select `date`, sum(netsales2) AS qty
+  from sales
+  WHERE date <= date_format(Now(), '%Y-12-31')- interval 2 year
+  and date >= date_format(Now(), '%Y-01-01')- interval 2 year
+      ".$this->getWhereClauses()."
+  group by DATE_FORMAT(date, '%Y-%m')
+  union all
+  select date_format(Now(), '%Y-12-01')- interval 2 year, 0
+  union all
+  select date_format(Now(), '%Y-11-01')- interval 2 year, 0
+  union all
+  select date_format(Now(), '%Y-10-01')- interval 2 year, 0
+  union all
+  select date_format(Now(), '%Y-09-01')- interval 2 year, 0
+  union all
+  select date_format(Now(), '%Y-08-01')- interval 2 year, 0
+  union all
+  select date_format(Now(), '%Y-07-01')- interval 2 year, 0
+  union all
+  select date_format(Now(), '%Y-06-01')- interval 2 year, 0
+  union all
+  select date_format(Now(), '%Y-05-01')- interval 2 year, 0
+  union all
+  select date_format(Now(), '%Y-04-01')- interval 2 year, 0
+  union all
+  select date_format(Now(), '%Y-03-01')- interval 2 year, 0
+  union all
+  select date_format(Now(), '%Y-02-01')- interval 2 year, 0
+  union all
+  select date_format(Now(), '%Y-01-01')- interval 2 year, 0
+) x
+group by sort;"
+        );
 
-        return $customers->result_array();
+        $arr      = $results->result_array();
+        $arr2     = $results2->result_array();
+        $arr3     = $results3->result_array();
+
+        return array($arr, $arr2, $arr3);
+
     }
 
-    public function getProductsLastWeek()
+    public function getCustomersLastWeek()
     {
         $results  = $this->db->query("select DATE_FORMAT(date, '%Y-%m-%d') as label, qty as data, 'Last Week' AS year
 from
 (
-  select `date`, sum(billingqty) AS qty
+  select `date`, sum(netsales2) AS qty
   from sales
   WHERE date <= NOW()
     and date >= DATE_ADD(NOW(),INTERVAL -7 DAY)
+    ".$this->getWhereClauses()."
   group by `date`
   union all
   select NOW(), 0
@@ -129,10 +256,11 @@ order by label asc;"
         $results2 = $this->db->query("select DATE_FORMAT(date, '%Y-%m-%d') as label, qty as data, '2 Weeks Historical' AS year
 from
 (
-  select `date`, sum(billingqty) AS qty
+  select `date`, sum(netsales2) AS qty
   from sales
   WHERE date <= DATE_ADD(NOW(),INTERVAL -7 DAY)
     and date >= DATE_ADD(NOW(),INTERVAL -14 DAY)
+    ".$this->getWhereClauses()."
   group by `date`
   union all
   select DATE_ADD(NOW(), INTERVAL -7 DAY), 0
@@ -155,10 +283,11 @@ order by label asc;"
         $results3 = $this->db->query("select DATE_FORMAT(date, '%Y-%m-%d') as label, qty as data, '3 Weeks Historical' AS year
 from
 (
-  select `date`, sum(billingqty) AS qty
+  select `date`, sum(netsales2) AS qty
   from sales
   WHERE date <= DATE_ADD(NOW(),INTERVAL -14 DAY)
     and date >= DATE_ADD(NOW(),INTERVAL -21 DAY)
+    ".$this->getWhereClauses()."
   group by `date`
   union all
   select DATE_ADD(NOW(), INTERVAL -14 DAY), 0
@@ -193,25 +322,49 @@ order by label asc;
     public function getProductsCustom($dateRange)
     {
         $results  = $this->db->query("
-SELECT 'Range ".$dateRange['endD']." to ".$dateRange['startD']."' AS label, SUM(billingqty) as data, DATE_FORMAT(date, '%Y') AS year
+    select label, data, year 
+    from
+    (SELECT '".$dateRange['startD']." to ".$dateRange['endD']."' AS label, SUM(billingqty) as data, 'Custom Range' AS year
     FROM sales
-    WHERE date <= '".$dateRange['startD']."'
-    and date >= '".$dateRange['endD']."'
-    GROUP BY label;"
+    WHERE date >= '".$dateRange['startD']."'
+    and date <= '".$dateRange['endD']."'
+    ".$this->getWhereClauses()."
+    GROUP BY label
+    union all
+    select '".$dateRange['startD']." to ".$dateRange['endD']."' as label, 0, 0
+    ) x
+    group by label;"
         );
+
         $results2 = $this->db->query("
-SELECT 'Range ".$dateRange['endD']." to ".$dateRange['startD']."' AS label, SUM(billingqty) as data, DATE_FORMAT(date, '%Y') AS year
+    select label, data, year 
+    from
+    (SELECT '".$dateRange['startD']." to ".$dateRange['endD']."' AS label, SUM(billingqty) as data, '1 Year Historical' AS year
     FROM sales
-    WHERE date <= date_sub('".$dateRange['startD']."', interval 1 year)
-    and date >= date_sub('".$dateRange['endD']."', interval 1 year)
-    GROUP BY label;"
+    WHERE date >= date_sub('".$dateRange['startD']."', interval 1 year)
+    and date <= date_sub('".$dateRange['endD']."', interval 1 year)
+    ".$this->getWhereClauses()."
+    GROUP BY label
+    union all
+    select '".$dateRange['startD']." to ".$dateRange['endD']."' as label, 0, 0
+    ) x
+    group by label;"
         );
+
+
         $results3 = $this->db->query("
-SELECT 'Range ".$dateRange['endD']." to ".$dateRange['startD']."' AS label, SUM(billingqty) as data, DATE_FORMAT(date, '%Y') AS year
+    select label, data, year 
+    from
+    (SELECT '".$dateRange['startD']." to ".$dateRange['endD']."' AS label, SUM(billingqty) as data, '2 Years Historical' AS year
     FROM sales
-    WHERE date <= date_sub('".$dateRange['startD']."', interval 2 year)
-    and date >= date_sub('".$dateRange['endD']."', interval 2 year)
-    GROUP BY label;"
+    WHERE date >= date_sub('".$dateRange['startD']."', interval 2 year)
+    and date <= date_sub('".$dateRange['endD']."', interval 2 year)
+    ".$this->getWhereClauses()."
+    GROUP BY label
+    union all
+    select '".$dateRange['startD']." to ".$dateRange['endD']."' as label, 0, 0
+    ) x
+    group by label;"
         );
 
         $arr      = $results->result_array();
@@ -222,15 +375,29 @@ SELECT 'Range ".$dateRange['endD']." to ".$dateRange['startD']."' AS label, SUM(
 
     }
 
+    public function checkRelatedTraffic($date, $material) {
+        $dateFrom = date('Y-m-d', strtotime("$date - 1 day"));
+        $results = $this->db->query("
+select ifnull ((select id from traffic_logs where datetime > '".$dateFrom." 00:00:00' and datetime < '".$date." 23:59:59'
+and url like '%".$material."%' limit 1), 0) as traffic;"
+        );
+
+        $result = $results->row();
+        return $result->traffic;
+    }
+
     var $table = 'sales';
-    var $column_order = array(null, 'date', 'material', 'billingqty'); //set column field database for datatable orderable
-    var $column_search = array('date','material', 'billingqty'); //set column field database for datatable searchable
+    var $column_order = array(null, 'sales.date', 'sales.material', 'sales.billingqty'); //set column field database for datatable orderable
+    var $column_search = array('sales.date','sales.material', 'sales.billingqty'); //set column field database for datatable searchable
     var $order = array('date' => 'desc'); // default order
 
     private function _get_datatables_query()
     {
 
+        $this->db->select('sales.date, sales.material, customer_logs.name, sales.billingqty');
         $this->db->from($this->table);
+
+        $this->db->join('customer_logs', 'customer_logs.customer_number = sales.soldtopt');
         $i = 0;
 
         //Search Field
@@ -261,6 +428,16 @@ SELECT 'Range ".$dateRange['endD']." to ".$dateRange['startD']."' AS label, SUM(
             $this->db->where('date <=', $_POST['end_range']);
         }
 
+        //Customer Field
+        if(!empty($_POST['customer'])) {
+            $this->db->where('customer_number =', $_POST['customer']);
+        }
+
+        //Product Field
+        if(!empty($_POST['product'])) {
+            $this->db->where('material =', $_POST['product']);
+        }
+
         //Ordering
         if(isset($_POST['order']))
         {
@@ -271,6 +448,17 @@ SELECT 'Range ".$dateRange['endD']." to ".$dateRange['startD']."' AS label, SUM(
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
+    }
+
+    private function getWhereClauses(){
+        $wheres = '';
+        if(isset($_GET['customer']) && !empty($_GET['customer'])) {
+            $wheres = "and soldtopt = '".$_GET['customer']."'";
+        }
+        if(isset($_GET['product']) && !empty($_GET['product'])) {
+            $wheres .= "and material = '".$_GET['product']."'";
+        }
+        return $wheres;
     }
 
     function get_datatables()

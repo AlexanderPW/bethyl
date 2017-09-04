@@ -32,6 +32,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <ul class="nav child_menu">
                             <li><a href="/products">Products</a></li>
 		                    <li><a href="/customers">Customers</a></li>
+	                        <li><a href="/traffic">Traffic</a></li>
 	                    </ul>
                     </li>
                 </ul>
