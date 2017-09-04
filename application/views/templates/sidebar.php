@@ -31,7 +31,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <li><a><i class="fa fa-bar-chart-o"></i> Data Presentation <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="/products">Products</a></li>
-                        </ul>
+		                    <li><a href="/customers">Customers</a></li>
+	                    </ul>
                     </li>
                 </ul>
             </div>

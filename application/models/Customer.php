@@ -5,26 +5,75 @@ class Customer extends CI_Model
 
     public function getSalesByMonth()
     {
-        $results  = $this->db->query("
-    SELECT DATE_FORMAT(date, '%M') AS label, SUM(billingqty) as data, DATE_FORMAT(date, '%Y') AS year
+        $results  = $this->db->query("select label, data, year, ordered from(
+ SELECT DATE_FORMAT(date, '%M') AS label, SUM(netsales2) as data, DATE_FORMAT(date, '%Y') AS year, DATE_FORMAT(date, '%m') as ordered
     FROM sales
     WHERE date <= last_day(NOW())
     and date >= Date_add(date_format(Now(), '%Y-%m-01'),interval - 6 month)
-    GROUP BY DATE_FORMAT(date, '%Y-%m');"
+    GROUP BY DATE_FORMAT(date, '%Y-%m')
+    union all
+    select date_format(Now(), '%M'), 0, 0,date_format(Now(), '%m')
+    union all
+    select date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 1 month), '%M'), 0, 0,date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 1 month), '%m')
+    union all
+    select date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 2 month), '%M'), 0, 0,date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 2 month), '%m')
+    union all
+    select date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 3 month), '%M'), 0, 0,date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 3 month), '%m')
+    union all
+    select date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 4 month), '%M'), 0, 0,date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 4 month), '%m')
+    union all
+    select date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 5 month), '%M'), 0, 0,date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 5 month), '%m')
+    union all
+    select date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 6 month), '%M'), 0, 0,date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 6 month), '%m')
+    )x
+    group by label
+    order by ordered asc;"
         );
-        $results2 = $this->db->query("
-    SELECT DATE_FORMAT(date, '%M') AS label, SUM(billingqty) as data, DATE_FORMAT(date, '%Y') AS year
-    FROM sales
+        $results2 = $this->db->query("    select label, data, year, ordered from(
+ SELECT DATE_FORMAT(date, '%M') AS label, SUM(netsales2) as data, DATE_FORMAT(date, '%Y') AS year, DATE_FORMAT(date, '%m') as ordered    FROM sales
     WHERE date <= last_day(NOW()) - interval 1 year
     and date >= Date_add(date_format(Now(), '%Y-%m-01') - interval 1 year,interval - 6 month)
-    GROUP BY DATE_FORMAT(date, '%Y-%m');"
+    GROUP BY DATE_FORMAT(date, '%Y-%m')
+   union all
+    select date_format(Now(), '%M'), 0, 0,date_format(Now(), '%m')
+    union all
+    select date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 1 month), '%M'), 0, 0,date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 1 month), '%m')
+    union all
+    select date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 2 month), '%M'), 0, 0,date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 2 month), '%m')
+    union all
+    select date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 3 month), '%M'), 0, 0,date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 3 month), '%m')
+    union all
+    select date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 4 month), '%M'), 0, 0,date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 4 month), '%m')
+    union all
+    select date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 5 month), '%M'), 0, 0,date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 5 month), '%m')
+    union all
+    select date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 6 month), '%M'), 0, 0,date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 6 month), '%m')
+    )x
+    group by label
+    order by ordered asc;"
         );
-        $results3 = $this->db->query("
-    SELECT DATE_FORMAT(date, '%M') AS label, SUM(billingqty) as data, DATE_FORMAT(date, '%Y') AS year
-    FROM sales
+        $results3 = $this->db->query("    select label, data, year, ordered from(
+ SELECT DATE_FORMAT(date, '%M') AS label, SUM(netsales2) as data, DATE_FORMAT(date, '%Y') AS year, DATE_FORMAT(date, '%m') as ordered    FROM sales
     WHERE date <= last_day(NOW()) - interval 2 year
     and date >= Date_add(date_format(Now(), '%Y-%m-01') - interval 2 year,interval - 6 month)
-    GROUP BY DATE_FORMAT(date, '%Y-%m');"
+    GROUP BY DATE_FORMAT(date, '%Y-%m')
+   union all
+    select date_format(Now(), '%M'), 0, 0,date_format(Now(), '%m')
+    union all
+    select date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 1 month), '%M'), 0, 0,date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 1 month), '%m')
+    union all
+    select date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 2 month), '%M'), 0, 0,date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 2 month), '%m')
+    union all
+    select date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 3 month), '%M'), 0, 0,date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 3 month), '%m')
+    union all
+    select date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 4 month), '%M'), 0, 0,date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 4 month), '%m')
+    union all
+    select date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 5 month), '%M'), 0, 0,date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 5 month), '%m')
+    union all
+    select date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 6 month), '%M'), 0, 0,date_format(Date_add(date_format(Now(), '%Y-%m-01'),interval - 6 month), '%m')
+    )x
+    group by label
+    order by ordered asc;"
         );
 
         $arr      = $results->result_array();
