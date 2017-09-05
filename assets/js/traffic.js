@@ -6,6 +6,8 @@ var customerData;
 var $customerEventSelect = $("#traffic-sales-filter1");
 var $referrerEventSelect = $("#traffic-sales-filter2");
 var $campaignEventSelect = $("#traffic-sales-filter3");
+var $codeEventSelect = $("#traffic-sales-filter4");
+var $timeEventSelect = $("#traffic-sales-filter5");
 var product_table;
 var product_start;
 product_start = moment().startOf('month').format('YYYY-MM-DD');
@@ -13,6 +15,9 @@ var product_end;
 product_end = moment().endOf('month').format('YYYY-MM-DD');
 var customerId;
 var referrerId;
+var campaignId;
+var codeId;
+var timeId;
 var date_label;
 var date_selector;
 var traffic_table;
@@ -451,11 +456,55 @@ function getReferrerList() {
 }
 
 function getCampaignList() {
-    $('#traffic-sales-filter2').select2({
+    $('#traffic-sales-filter3').select2({
         allowClear: true,
-        placeholder: 'Filter by Referrer',
+        placeholder: 'Filter by Campaign',
         ajax: {
-            url: '/traffic/getreferrer',
+            url: '/traffic/getcampaign',
+            data: function (d) {
+                Object.assign(d, returnFilters());
+                return d;
+            },
+            dataType: 'json',
+            delay: 250,
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        }
+    });
+}
+
+function getCodeList() {
+    $('#traffic-sales-filter4').select2({
+        allowClear: true,
+        placeholder: 'Filter by Reponse Code',
+        ajax: {
+            url: '/traffic/getcode',
+            data: function (d) {
+                Object.assign(d, returnFilters());
+                return d;
+            },
+            dataType: 'json',
+            delay: 250,
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        }
+    });
+}
+
+function getTimeList() {
+    $('#traffic-sales-filter5').select2({
+        allowClear: true,
+        placeholder: 'Filter by Reponse Time (ms)',
+        ajax: {
+            url: '/traffic/gettime',
             data: function (d) {
                 Object.assign(d, returnFilters());
                 return d;
@@ -478,7 +527,10 @@ function returnFilters() {
         'start_range' : product_start,
         'end_range' : product_end,
         'customer' : customerId,
-        'referrer' : referrerId
+        'referrer' : referrerId,
+        'campaign' : campaignId,
+        'code' : codeId,
+        'time' : timeId
     }
     return d;
 }
@@ -507,6 +559,48 @@ function referrerReturnId (name, evt) {
 
 function clearReferrer() {
     referrerId = '';
+    product_table.ajax.reload();
+    chartTypeSelect(date_selector);
+}
+
+function campaignReturnId (name, evt) {
+    JSON.stringify(evt.params, function (key, value) {
+        campaignId = value.data.id;
+        product_table.ajax.reload();
+        chartTypeSelect(date_selector);
+    });
+}
+
+function clearCampaign() {
+    campaignId = '';
+    product_table.ajax.reload();
+    chartTypeSelect(date_selector);
+}
+
+function codeReturnId (name, evt) {
+    JSON.stringify(evt.params, function (key, value) {
+        codeId = value.data.id;
+        product_table.ajax.reload();
+        chartTypeSelect(date_selector);
+    });
+}
+
+function clearCode() {
+    codeId = '';
+    product_table.ajax.reload();
+    chartTypeSelect(date_selector);
+}
+
+function timeReturnId (name, evt) {
+    JSON.stringify(evt.params, function (key, value) {
+        timeId = value.data.id;
+        product_table.ajax.reload();
+        chartTypeSelect(date_selector);
+    });
+}
+
+function clearTime() {
+    timeId = '';
     product_table.ajax.reload();
     chartTypeSelect(date_selector);
 }
@@ -600,8 +694,16 @@ $(document).ready(function() {
     $referrerEventSelect.on("select2:unselect", function (e) { clearReferrer(); });
 
     getCampaignList();
-    $campaignEventSelect.on("select2:select", function (e) { referrerReturnId("select2:select", e); });
-    $campaignEventSelect.on("select2:unselect", function (e) { clearReferrer(); });
+    $campaignEventSelect.on("select2:select", function (e) { campaignReturnId("select2:select", e); });
+    $campaignEventSelect.on("select2:unselect", function (e) { clearCampaign(); });
+
+    getCodeList();
+    $codeEventSelect.on("select2:select", function (e) { codeReturnId("select2:select", e); });
+    $codeEventSelect.on("select2:unselect", function (e) { clearCode(); });
+
+    getTimeList();
+    $timeEventSelect.on("select2:select", function (e) { timeReturnId("select2:select", e); });
+    $timeEventSelect.on("select2:unselect", function (e) { clearTime(); });
 });
 
 

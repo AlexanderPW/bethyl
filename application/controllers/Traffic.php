@@ -74,4 +74,16 @@ class Traffic extends CI_Controller {
     public function getReferrer() {
         echo json_encode($this->traffic_model->getReferrers());
     }
+
+    public function getCampaign() {
+        echo json_encode($this->traffic_model->getCampaigns());
+    }
+
+    public function getCode() {
+        echo json_encode($this->traffic_model->getCodes());
+    }
+
+    public function getTime() {
+        echo json_encode($this->traffic_model->getTimes());
+    }
 }

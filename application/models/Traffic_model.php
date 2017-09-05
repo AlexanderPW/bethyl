@@ -19,6 +19,55 @@ class Traffic_model extends CI_Model
         return $customers->result_array();
     }
 
+    public function getCodes() {
+        $this->db->distinct();
+        $this->db->select('response AS id, response as text');
+        $this->db->from('iis_logs');
+        if (!empty($_GET['term']) && !empty($_GET['start_range']) && !empty($_GET['end_range'])) {
+            $this->db->where('datetime >=', $_GET['start_range'].' 00:00:00' );
+            $this->db->where('datetime <=', $_GET['end_range'].' 23:59:59');
+            $this->db->like('response', $_GET['term']);
+        }
+        $this->db->limit(10);
+
+        $customers = $this->db->get();
+
+        return $customers->result_array();
+    }
+
+    public function getTimes() {
+        $times = array(
+            ['id' => '0 and 5', 'text' => '0 to 5ms'],
+            ['id' => '5 and 10', 'text' => '5ms to 10ms'],
+            ['id' => '10 and 20', 'text' => '10ms to 20ms'],
+            ['id' => '20 and 50', 'text' => '20ms to 50ms'],
+            ['id' => '50 and 75', 'text' => '50ms to 75ms'],
+            ['id' => '75 and 100', 'text' => '75ms to 100ms'],
+            ['id' => '100 and 250', 'text' => '100ms to 250ms'],
+            ['id' => '250 and 500', 'text' => '250ms to 500ms'],
+            ['id' => '500 and 1000', 'text' => '500ms to 1,000ms'],
+            ['id' => '1000', 'text' => '1,000ms +']
+        );
+
+        return $times;
+    }
+
+    public function getCampaigns() {
+        $this->db->distinct();
+        $this->db->select('campaign AS id, campaign as text');
+        $this->db->from('iis_logs');
+        if (!empty($_GET['term']) && !empty($_GET['start_range']) && !empty($_GET['end_range'])) {
+            $this->db->where('datetime >=', $_GET['start_range'].' 00:00:00' );
+            $this->db->where('datetime <=', $_GET['end_range'].' 23:59:59');
+            $this->db->like('campaign', $_GET['term']);
+        }
+        $this->db->limit(10);
+
+        $customers = $this->db->get();
+
+        return $customers->result_array();
+    }
+
     public function getCustomers(){
 
         $this->db->distinct();
@@ -40,7 +89,9 @@ class Traffic_model extends CI_Model
   from
   (
   select `datetime`, count(1) AS qty
-  from iis_logs
+  FROM iis_logs il
+    LEFT JOIN customer_ip ci
+    ON il.visiting_ip = ci.ip
   WHERE datetime <= last_day(date_format(NOW(), '%Y-%m-%d 23:59:59'))   
   and datetime >= date_format(Now(), '%Y-%m-01 00:00:00')
    ".$this->getWhereClauses()."
@@ -55,7 +106,9 @@ group by label;
   from
   (
   select `datetime`, count(1) AS qty
-  from iis_logs
+  FROM iis_logs il
+    LEFT JOIN customer_ip ci
+    ON il.visiting_ip = ci.ip
   WHERE datetime <= last_day(date_format(NOW(), '%Y-%m-%d 23:59:59') - interval 1 year)   
   and datetime >= date_format(Now(), '%Y-%m-01 00:00:00') - interval 1 year
    ".$this->getWhereClauses()."
@@ -70,7 +123,9 @@ group by label;
   from
   (
   select `datetime`, count(1) AS qty
-  from iis_logs
+  FROM iis_logs il
+    LEFT JOIN customer_ip ci
+    ON il.visiting_ip = ci.ip
   WHERE datetime <= last_day(date_format(NOW(), '%Y-%m-%d 23:59:59') - interval 2 year)   
   and datetime >= date_format(Now(), '%Y-%m-01 00:00:00') - interval 2 year
    ".$this->getWhereClauses()."
@@ -95,7 +150,9 @@ group by label;
 from
 (
   select `datetime`, count(*) AS qty
-  from iis_logs
+    FROM iis_logs il
+    LEFT JOIN customer_ip ci
+    ON il.visiting_ip = ci.ip
   WHERE datetime <= date_format(NOW(), '%Y-%m-%d 23:59:59')
     and datetime >= DATE_ADD(date_format(NOW(), '%Y-%m-%d 00:00:00') ,INTERVAL -7 DAY)
     ".$this->getWhereClauses()."
@@ -122,7 +179,9 @@ order by label asc;"
 from
 (
   select `datetime`, count(*) AS qty
-  from iis_logs
+  FROM iis_logs il
+    LEFT JOIN customer_ip ci
+    ON il.visiting_ip = ci.ip
   WHERE datetime <= DATE_ADD(date_format(NOW(), '%Y-%m-%d 23:59:59'),INTERVAL -7 DAY)
     and datetime >= DATE_ADD(date_format(NOW(), '%Y-%m-%d 00:00:00'),INTERVAL -14 DAY)
     ".$this->getWhereClauses()."
@@ -149,7 +208,9 @@ order by label asc;"
 from
 (
   select `datetime`, count(*) AS qty
-  from iis_logs
+  FROM iis_logs il
+    LEFT JOIN customer_ip ci
+    ON il.visiting_ip = ci.ip
   WHERE datetime <= DATE_ADD(date_format(NOW(), '%Y-%m-%d 23:59:59'),INTERVAL -14 DAY)
     and datetime >= DATE_ADD(date_format(NOW(), '%Y-%m-%d 00:00:00'),INTERVAL -21 DAY)
     ".$this->getWhereClauses()."
@@ -190,7 +251,9 @@ order by label asc;;
     select label, data, year 
     from
     (SELECT '".$dateRange['startD']." to ".$dateRange['endD']."' AS label, count(*) as data, 'Custom Range' AS year
-    FROM iis_logs
+    FROM iis_logs il
+    LEFT JOIN customer_ip ci
+    ON il.visiting_ip = ci.ip
     WHERE datetime >= date_format('".$dateRange['startD']."','%Y-%m-%d 00:00:00')
     and datetime <= date_format('".$dateRange['endD']."', '%Y-%m-%d 23:59:59')
     ".$this->getWhereClauses()."
@@ -205,7 +268,9 @@ order by label asc;;
     select label, data, year 
     from
     (SELECT '".$dateRange['startD']." to ".$dateRange['endD']."' AS label, count(*) as data, '1 Year Historical' AS year
-    FROM iis_logs
+    FROM iis_logs il
+    LEFT JOIN customer_ip ci
+    ON il.visiting_ip = ci.ip
     WHERE datetime >= date_format('".$dateRange['startD']."','%Y-%m-%d 00:00:00') - interval 1 year
     and datetime <= date_format('".$dateRange['endD']."', '%Y-%m-%d 23:59:59') - interval 1 year
     ".$this->getWhereClauses()."
@@ -221,7 +286,9 @@ order by label asc;;
     select label, data, year 
     from 
     (SELECT '".$dateRange['startD']." to ".$dateRange['endD']."' AS label, count(*) as data, '2 Years Historical' AS year
-    FROM iis_logs
+    FROM iis_logs il
+    LEFT JOIN customer_ip ci
+    ON il.visiting_ip = ci.ip
     WHERE datetime >= date_format('".$dateRange['startD']."','%Y-%m-%d 00:00:00') - interval 2 year
     and datetime <= date_format('".$dateRange['endD']."', '%Y-%m-%d 23:59:59') - interval 2 year
     ".$this->getWhereClauses()."
@@ -303,6 +370,22 @@ and url like '%".$material."%' limit 1), 0) as traffic;"
             $this->db->where('il.referrer', $_POST['referrer']);
         }
 
+        //Campaign Field
+        if(!empty($_POST['campaign'])) {
+            $this->db->where('il.campaign', $_POST['campaign']);
+        }
+
+        //Code Field
+        if(!empty($_POST['code'])) {
+            $this->db->where('il.response', $_POST['code']);
+        }
+
+        //Time Field
+        if(!empty($_POST['time'])) {
+            $time = $_POST['time'];
+            $this->db->where("il.time_taken between $time");
+        }
+
         //Ordering
         if(isset($_POST['order']))
         {
@@ -318,10 +401,20 @@ and url like '%".$material."%' limit 1), 0) as traffic;"
     private function getWhereClauses(){
         $wheres = '';
         if(isset($_GET['customer']) && !empty($_GET['customer'])) {
-            $wheres = "and customer = '".$_GET['customer']."'";
+            $wheres = "and ci.customer = '".$_GET['customer']."'";
         }
-        if(isset($_GET['product']) && !empty($_GET['product'])) {
-            $wheres .= "and material = '".$_GET['product']."'";
+        if(isset($_GET['referrer']) && !empty($_GET['referrer'])) {
+            $wheres .= "and referrer = '".$_GET['referrer']."'";
+        }
+        if(isset($_GET['campaign']) && !empty($_GET['campaign'])) {
+            $wheres .= "and campaign = '".$_GET['campaign']."'";
+        }
+        if(isset($_GET['code']) && !empty($_GET['code'])) {
+            $wheres .= "and response = '".$_GET['code']."'";
+        }
+        if(isset($_GET['time']) && !empty($_GET['time'])) {
+            $time = $_GET['time'];
+            $wheres .= "and time_taken between $time";
         }
         return $wheres;
     }
