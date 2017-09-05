@@ -11,7 +11,7 @@ var sales_by_year_settings = {
             fill: 0.4
         },
         points: {
-            radius: 0,
+            radius: 5,
             show: true
         },
         shadowSize: 2
@@ -24,7 +24,7 @@ var sales_by_year_settings = {
         borderWidth: 1,
         color: '#fff'
     },
-    colors: ["#1ABB9C", "rgba(3, 88, 106, 0.38)"],
+    colors: ["#1ABB9C", "#3498DB"],
     //colors: ["rgba(38, 185, 154, 0.38)", "rgba(3, 88, 106, 0.38)"],
     xaxis: {
         tickColor: "rgba(51, 51, 51, 0.06)",
@@ -44,7 +44,10 @@ var sales_by_year_settings = {
             return '$'+x.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ",");
         }
     },
-    tooltip: false
+    tooltip: true,
+    tooltipOpts: {
+        content: "Total: %y<br>"
+    }
 }
 
 if ($("#sales_by_year").length){

@@ -81,7 +81,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		                    </tr>
 		                    <tr>
 			                    <td>
-				                    <p><i class="fa fa-square aero"></i><?=date('Y', strtotime('-1 year'));?> </p>
+				                    <p><i class="fa fa-square cool-blue"></i><?=date('Y', strtotime('-1 year'));?> </p>
 			                    </td>
 		                    </tr>
 	                    </table>
@@ -104,21 +104,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="x_panel fixed_height_320">
                 <div class="x_title">
                     <h2>Best Selling Products</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Settings 1</a>
-                                </li>
-                                <li><a href="#">Settings 2</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><a class="close-link"><i class="fa fa-close"></i></a>
-                        </li>
-                    </ul>
+	                <ul class="nav navbar-right panel_toolbox panel_toolbox_min">
+		                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+		                </li>
+		                <li><a class="close-link"><i class="fa fa-close"></i></a>
+		                </li>
+	                </ul>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
@@ -138,17 +129,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		    <div class="x_panel fixed_height_320">
 			    <div class="x_title">
 				    <h2>Highest Spending Customers</h2>
-				    <ul class="nav navbar-right panel_toolbox">
+				    <ul class="nav navbar-right panel_toolbox panel_toolbox_min">
 					    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-					    </li>
-					    <li class="dropdown">
-						    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-						    <ul class="dropdown-menu" role="menu">
-							    <li><a href="#">Settings 1</a>
-							    </li>
-							    <li><a href="#">Settings 2</a>
-							    </li>
-						    </ul>
 					    </li>
 					    <li><a class="close-link"><i class="fa fa-close"></i></a>
 					    </li>
@@ -176,17 +158,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<div class="x_panel fixed_height_320">
 			<div class="x_title">
 				<h2>Campaign CTR</h2>
-				<ul class="nav navbar-right panel_toolbox">
+				<ul class="nav navbar-right panel_toolbox panel_toolbox_min">
 					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-					</li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">Settings 1</a>
-							</li>
-							<li><a href="#">Settings 2</a>
-							</li>
-						</ul>
 					</li>
 					<li><a class="close-link"><i class="fa fa-close"></i></a>
 					</li>

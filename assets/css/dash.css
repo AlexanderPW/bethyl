@@ -3,6 +3,11 @@
     min-width:0px !important;
 }
 
+/* cool color */
+.cool-blue {
+    color: #3498DB;
+}
+
 /* Mimic table appearance */
 div.table {
     display: table;
