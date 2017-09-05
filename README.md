@@ -17,6 +17,7 @@ Gulp
 ## Steps:
 
     - Modify config/database.php to your credentials
+    - Modify config/config.php and set your base_url
     - Install NPM dependencies (npm install)
     - Install Bower dependencies (bower install)
     - Install Composer dependencies (composer install)
