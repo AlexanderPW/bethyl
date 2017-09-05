@@ -3,15 +3,15 @@ CI 3.1.5
 Bower
 Gulp
 
-Package Installation Requirements:
+# Package Requirements
 
-MySQL
-PHP 5.4+
-Composer
-Bower
-NPM
-- NPM Bower (npm install -g bower)
-Gnumeric
+    - Composer
+    - NodeJS
+    - NPM
+    - NPM Bower (npm install -g bower)
+    - NPM Gulp (npm install -g gulp)
+    - Ruby & RubyGems
+    - Sass (gem install sass)
 
 Package Installation Instructions:
 
