@@ -448,8 +448,8 @@ and url like '%".$material."%' limit 1), 0) as traffic;"
 (SELECT campaign as label, count(*) as data
 FROM iis_logs
 WHERE (
-datetime between  DATE_FORMAT(NOW() ,'%Y-%m-01')
-AND NOW()
+datetime between  DATE_FORMAT(NOW()- interval 1 month ,'%Y-%m-01')
+AND last_day(NOW() - interval 1 month)
 )
 and campaign IS NOT NULL
 group by campaign order by data desc limit 5

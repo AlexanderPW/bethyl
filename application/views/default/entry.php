@@ -113,7 +113,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <h4>Top 5 <?=date('F Y');?> <small>by quantity sold</small></h4>
+                    <h4>Top 5 <?=date('F Y', strtotime("-1 month"));?> <small>by quantity sold</small></h4>
 	                <div class="clearfix"></div>
 	                <div id="product-bar-holder" style="width:100%;height:200px">
 
@@ -138,7 +138,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				    <div class="clearfix"></div>
 			    </div>
 			    <div class="x_content">
-				    <h4>Top 5 <?=date('F Y');?> <small>by amount spent</small></h4>
+				    <h4>Top 5 <?=date('F Y', strtotime("-1 month"));?> <small>by amount spent</small></h4>
 				    <div class="clearfix"></div>
 				    <div id="customer-bar-holder" style="width:100%;height:200px">
 
@@ -167,7 +167,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<h4>Top 5 <?=date('F Y');?> <small>by clicks</small></h4>
+				<h4>Top 5 <?=date('F Y', strtotime("-1 month"));?> <small>by clicks</small></h4>
 				<div class="clearfix"></div>
 				<div id="traffic-bar-holder" style="width:100%;height:200px">
 

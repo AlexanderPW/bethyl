@@ -3,9 +3,9 @@
 class Traffic_datatable extends CI_Model
 {
 
-    var $table = 'iis_logs';
-    var $column_order = array(null, 'datetime', 'url', 'visiting_ip'); //set column field database for datatable orderable
-    var $column_search = array('datetime', 'url', 'visiting_ip'); //set column field database for datatable searchable
+    var $table = 'iis_logs il';
+    var $column_order = array(null, 'datetime', 'url', 'visiting_ip', 'ci.customer'); //set column field database for datatable orderable
+    var $column_search = array('datetime', 'url', 'visiting_ip', 'ci.customer'); //set column field database for datatable searchable
     var $order = array('datetime' => 'desc'); // default order
 
     private function _get_datatables_query()
@@ -14,8 +14,9 @@ class Traffic_datatable extends CI_Model
         $fromDate = date('Y-m-d 00:00:00', strtotime("$date - 1 day"));
         $material = $_POST['id'];
 
-        $this->db->select('datetime, url, visiting_ip');
+        $this->db->select('datetime, url, visiting_ip, ci.customer');
         $this->db->from($this->table);
+        $this->db->join('customer_ip as ci', 'ci.ip = il.visiting_ip', 'left');
 
 
            $this->db->where("datetime >=", $fromDate);

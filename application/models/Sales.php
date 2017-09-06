@@ -98,7 +98,7 @@ class Sales extends CI_Model
 (select ma.description as label, sa.material, sum(sa.billingqty) as data
 from sales sa
 join material ma on ma.`material` = sa.material
-WHERE MONTH(sa.date) = MONTH(CURRENT_DATE())
+WHERE MONTH(sa.date) = MONTH(CURRENT_DATE() - interval 1 month)
 AND YEAR(sa.date) = YEAR(CURRENT_DATE())
 group by sa.material
 Order by sum(billingqty) desc limit 5) x
@@ -117,7 +117,7 @@ LIMIT 5;");
 (select cu.name as label, sum(sa.netsales2) as data
 from sales sa
 join customer_logs cu on sa.soldtopt = cu.customer_number
-WHERE MONTH(sa.date) = MONTH(CURRENT_DATE())
+WHERE MONTH(sa.date) = MONTH(CURRENT_DATE() - interval 1 month)
 AND YEAR(sa.date) = YEAR(CURRENT_DATE())
 group by sa.soldtopt
 Order by sum(sa.netsales2) desc limit 5) x

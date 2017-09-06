@@ -19,6 +19,7 @@ class Ajax_controller extends CI_Controller {
             $row[] = date('M d, Y', strtotime($traffic->datetime));
             $row[] = $traffic->url;
             $row[] = $traffic->visiting_ip;
+            $row[] = ($traffic->customer ? $traffic->customer : '-');
             $data[] = $row;
             $no++;
         }
@@ -31,11 +32,6 @@ class Ajax_controller extends CI_Controller {
         );
         //output to json format
         echo json_encode($output);
-    }
-
-    public function gettest() {
-        $table = $this->load->view('partials/traffic_modal', null, true);
-        echo json_encode($table);
     }
 
 }

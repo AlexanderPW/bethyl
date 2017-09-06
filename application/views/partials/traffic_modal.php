@@ -17,6 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			            <th>Date</th>
 			            <th>Relative URL</th>
 			            <th>Visiting IP</th>
+			            <th>Customer</th>
 		            </tr>
 		            </thead>
 		            <tbody>
