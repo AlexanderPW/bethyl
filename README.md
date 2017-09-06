@@ -1,10 +1,10 @@
-Initial commit for Dashbaord
-CI 3.1.5
-Bower
-Gulp
+Bethyl Dashbaord
 
 # Package Requirements
 
+    - PHP
+    - PHP-CLI
+    - MySQL
     - Composer
     - Gnumeric
     - NodeJS
@@ -21,7 +21,9 @@ Gulp
     - Install NPM dependencies (npm install)
     - Install Bower dependencies (bower install)
     - Install Composer dependencies (composer install)
+    - Setup File path and directory locations in Control Panel
 
 ## Cronjobs:
 
     Located in ~/Cron/*.sh
+    Assign time in cron and point job to respective files in cron folder.
