@@ -25,6 +25,7 @@ class Settings extends CI_Model
         $this->db->select('var as type, var2 as value');
         $this->db->from('config');
         $this->db->like('var', '-location');
+        $this->db->or_where('var', 'ssconvert');
         $results = $this->db->get();
         $arr = [];
         foreach ($results->result_array() as $array) {

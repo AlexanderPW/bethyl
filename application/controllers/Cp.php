@@ -58,7 +58,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             public function serverLog()
             {
                 $this->load->model('settings');
-                $targetDir  = FCPATH.$this->settings->getPath('iis-location');
+                $targetDir  = $this->settings->getPath('iis-location');
                 $fileName   = str_replace(' ', '_', $_FILES['file']['name']);
                 $targetFile = $targetDir .'/'. $fileName;
                 $this->load->library('file_iterator');
@@ -75,7 +75,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             public function customerLog()
             {
                 $this->load->model('settings');
-                $targetDir  = FCPATH.$this->settings->getPath('kna-location');
+                $targetDir  = $this->settings->getPath('kna-location');
                 $fileName   = str_replace(' ', '_', $_FILES['file']['name']);
                 $destination = FCPATH."upload/complete/kna_logs/".$fileName;
                 $targetFile = $targetDir .'/'. $fileName;
@@ -84,7 +84,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $fields = null;
 
                 if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)) {
-                    exec("/usr/local/bin/ssconvert ".$targetFile." ".$targetFile.".csv 2>&1", $output);
+                    exec($this->settings->getPath('ssconvert')." ".$targetFile." ".$targetFile.".csv 2>&1", $output);
                     $csvName = $fileName.'.csv';
                     $count = $this->file_iterator->importKNA($csvName, $targetDir);
                     $this->file_iterator->moveComplete($targetFile, $destination);
@@ -96,7 +96,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             public function materialLog()
             {
                 $this->load->model('settings');
-                $targetDir  = FCPATH.$this->settings->getPath('mara-location');
+                $targetDir  = $this->settings->getPath('mara-location');
                 $fileName   = str_replace(' ', '_', $_FILES['file']['name']);
                 $destination = FCPATH."upload/complete/mara_logs/".$fileName;
                 $targetFile = $targetDir .'/'. $fileName;
@@ -105,7 +105,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $fields = null;
 
                 if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)) {
-                    exec("/usr/local/bin/ssconvert ".$targetFile." ".$targetFile.".csv 2>&1", $output);
+                    exec($this->settings->getPath('ssconvert')." ".$targetFile." ".$targetFile.".csv 2>&1", $output);
                     $csvName = $fileName.'.csv';
                     $count = $this->file_iterator->importMara($csvName, $targetDir);
                     $this->file_iterator->moveComplete($targetFile, $destination);
@@ -117,7 +117,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             public function salesLog()
             {
                 $this->load->model('settings');
-                $targetDir  = FCPATH.$this->settings->getPath('sales-location');
+                $targetDir  = $this->settings->getPath('sales-location');
                 $fileName   = str_replace(' ', '_', $_FILES['file']['name']);
                 $destination = FCPATH."upload/complete/901_logs/".$fileName;
                 $targetFile = $targetDir .'/'. $fileName;
@@ -126,7 +126,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $fields = null;
 
                 if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)) {
-                    exec("/usr/local/bin/ssconvert ".$targetFile." ".$targetFile.".csv 2>&1", $output);
+                    exec($this->settings->getPath('ssconvert')." ".$targetFile." ".$targetFile.".csv 2>&1", $output);
                     $csvName = $fileName.'.csv';
                     $count = $this->file_iterator->import901($csvName, $targetDir);
                     $this->file_iterator->moveComplete($targetFile, $destination);
@@ -138,7 +138,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             public function ipLog()
             {
                 $this->load->model('settings');
-                $targetDir  = FCPATH.$this->settings->getPath('ip-location');
+                $targetDir  = $this->settings->getPath('ip-location');
                 $fileName   = str_replace(' ', '_', $_FILES['file']['name']);
                 $destination = FCPATH."upload/complete/ip_logs/".$fileName;
                 $targetFile = $targetDir .'/'. $fileName;
@@ -147,7 +147,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $fields = null;
 
                 if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)) {
-                    exec("/usr/local/bin/ssconvert ".$targetFile." ".$targetFile.".csv 2>&1", $output);
+                    exec($this->settings->getPath('ssconvert')." ".$targetFile." ".$targetFile.".csv 2>&1", $output);
                     $csvName = $fileName.'.csv';
                     $count = $this->file_iterator->importIp($csvName, $targetDir);
                     $this->file_iterator->moveComplete($targetFile, $destination);

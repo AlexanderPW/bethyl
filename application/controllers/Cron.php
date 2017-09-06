@@ -6,14 +6,14 @@ class Cron extends CI_Controller {
     public function importIisDir() {
         echo "Begin processing \n";
         $this->load->model('settings');
-        $path = FCPATH.$this->settings->getPath('iis-location');
+        $path = $this->settings->getPath('iis-location');
         $this->load->library('file_iterator');
         $this->file_iterator->iterateIIS($path);
     }
 
     public function getIisPath() {
         $this->load->model('settings');
-        echo FCPATH.$this->settings->getPath('iis-location').'/*.log';
+        echo $this->settings->getPath('iis-location').'/*.log';
     }
 
     public function putIisPath() {
@@ -22,7 +22,7 @@ class Cron extends CI_Controller {
 
     public function getKnaPath() {
         $this->load->model('settings');
-        echo FCPATH.$this->settings->getPath('kna-location').'/*.xlsx';
+        echo $this->settings->getPath('kna-location').'/*.xlsx';
     }
 
     public function putKnaPath() {
@@ -32,7 +32,7 @@ class Cron extends CI_Controller {
     public function importKnaDir() {
         echo "Begin processing \n";
         $this->load->model('settings');
-        $path = FCPATH.$this->settings->getPath('kna-location');
+        $path = $this->settings->getPath('kna-location');
         $this->load->library('file_iterator');
         $this->file_iterator->iterateKNA($path);
         exit;
@@ -40,7 +40,7 @@ class Cron extends CI_Controller {
 
     public function getMaraPath() {
         $this->load->model('settings');
-        echo FCPATH.$this->settings->getPath('mara-location').'/*.xlsx';
+        echo $this->settings->getPath('mara-location').'/*.xlsx';
     }
 
     public function putMaraPath() {
@@ -50,7 +50,7 @@ class Cron extends CI_Controller {
     public function importMaraDir() {
         echo "Begin processing \n";
         $this->load->model('settings');
-        $path = FCPATH.$this->settings->getPath('mara-location');
+        $path = $this->settings->getPath('mara-location');
         $this->load->library('file_iterator');
         $this->file_iterator->iterateMara($path);
         exit;
@@ -58,7 +58,7 @@ class Cron extends CI_Controller {
 
     public function get901Path() {
         $this->load->model('settings');
-        echo FCPATH.$this->settings->getPath('sales-location').'/*.xlsx';
+        echo $this->settings->getPath('sales-location').'/*.xlsx';
     }
 
     public function put901Path() {
@@ -68,7 +68,7 @@ class Cron extends CI_Controller {
     public function import901Dir() {
         echo "Begin processing \n";
         $this->load->model('settings');
-        $path = FCPATH.$this->settings->getPath('sales-location');
+        $path = $this->settings->getPath('sales-location');
         $this->load->library('file_iterator');
         $this->file_iterator->iterate901($path);
         exit;
@@ -76,7 +76,7 @@ class Cron extends CI_Controller {
 
     public function getIpPath() {
         $this->load->model('settings');
-        echo FCPATH.$this->settings->getPath('ip-location').'/*.xlsx';
+        echo $this->settings->getPath('ip-location').'/*.xlsx';
     }
 
     public function putIpPath() {
@@ -86,9 +86,9 @@ class Cron extends CI_Controller {
     public function importIpDir() {
         echo "Begin processing \n";
         $this->load->model('settings');
-        $path = FCPATH.$this->settings->getPath('ip-location');
+        $path = $this->settings->getPath('ip-location');
         $this->load->library('file_iterator');
-        $this->file_iterator->iterate901($path);
+        $this->file_iterator->iterateIp($path);
         exit;
     }
 

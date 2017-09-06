@@ -23,9 +23,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <?foreach($trafficGroup as $opt) {echo $opt;};?>
 					</select>
 					<span class="input-group-btn">
-					<button type="submit" class="btn btn-success traffic-option">Submit</button>
+					<button type="submit" class="btn btn-primary traffic-option">Submit</button>
 						</span>
 				</div>
+			<div class="ln_solid"></div>
+			<h2>App Location - ssconvert</h2>
+			<div class="input-group">
+				<input type="text" id="ssconvert" class="form-control" value="<?=$logLocations['ssconvert'];?>"placeholder="Type Full Location for ssconvert">
+				<span class="input-group-btn">
+					<button type="button" data-id="ssconvert" class="btn btn-primary log-location">Submit</button>
+				</span>
+			</div>
 		</div>
 	</div>
 	</div>

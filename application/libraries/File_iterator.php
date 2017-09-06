@@ -29,8 +29,8 @@ class File_iterator
 
     public function importIIS($fileName)
     {
-        $this->load->model('settings');
-        $targetDir  = FCPATH.$this->settings->getPath('iis-location');
+        $this->ci->load->model('settings');
+        $targetDir  = $this->ci->settings->getPath('iis-location');
         $targetFile  = $targetDir.'/'.$fileName;
         $destination = FCPATH . "upload/complete/iis_logs/" . $fileName;
         $fields      = null;
@@ -182,7 +182,8 @@ class File_iterator
     }
 
     public function moveComplete($from, $to) {
-        rename($from, $to);
+        unlink($from);
+        // rename($from, $to); deleting now instead...
 }
 
     public function GetBetween($var1="",$var2="",$pool){
