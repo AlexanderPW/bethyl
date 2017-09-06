@@ -1,6 +1,6 @@
-Bethyl Dashbaord
+# Bethyl Dashbaord
 
-# Package Requirements
+## Package Requirements
 
     - PHP
     - PHP-CLI
