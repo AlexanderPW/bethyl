@@ -59,4 +59,9 @@ class Settings extends CI_Model
         return $this->db->get('config')->row()->var2;
     }
 
+    public function getSetting($type) {
+        $this->db->where('var', $type);
+        return $this->db->get('config')->row()->var2;
+    }
+
 }

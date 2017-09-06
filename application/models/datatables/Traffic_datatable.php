@@ -3,7 +3,7 @@
 class Traffic_datatable extends CI_Model
 {
 
-    var $table = 'traffic_logs';
+    var $table = 'iis_logs';
     var $column_order = array(null, 'datetime', 'url', 'visiting_ip'); //set column field database for datatable orderable
     var $column_search = array('datetime', 'url', 'visiting_ip'); //set column field database for datatable searchable
     var $order = array('datetime' => 'desc'); // default order

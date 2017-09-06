@@ -308,9 +308,10 @@ order by label asc;;
     }
 
     public function checkRelatedTraffic($date, $material) {
-       $dateFrom = date('Y-m-d', strtotime("$date - 1 day"));
+        $this->load->model('settings');
+        $dateFrom = date('Y-m-d', strtotime("$date - ".$this->settings->getSetting('trafficDays')." day"));
        $results = $this->db->query("
-select ifnull ((select id from traffic_logs where datetime > '".$dateFrom." 00:00:00' and datetime < '".$date." 23:59:59'
+select ifnull ((select id from iis_logs where datetime > '".$dateFrom." 00:00:00' and datetime < '".$date." 23:59:59'
 and url like '%".$material."%' limit 1), 0) as traffic;"
        );
 
