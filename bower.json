@@ -70,6 +70,7 @@
     "DateJS": "^1.0.0-rc3",
     "flot.curvedlines": "^1.1.1",
     "flot.orderbars": "*",
+    "flot.tooltip.pib": "*",
     "flot-spline": "^0.8.2"
   },
   "dependencies": {
