@@ -23,6 +23,22 @@
     - Install Composer dependencies (composer install)
     - Setup File path and directory locations in Control Panel
 
+## Sample Apache Config
+
+        <VirtualHost *:80>
+            ServerAdmin webmaster@dummy-host.example.com
+            DocumentRoot /Path/To/Root
+            ServerName nameyourapp.com
+            ErrorLog /Path/To/Log
+                <Directory /Path/To/Root>
+                       SetEnv APPLICATION_ENVIRONMENT development
+                       DirectoryIndex index.php
+                       AllowOverride All
+                       Order allow,deny
+                       Allow from all
+               </Directory>
+        </VirtualHost>
+
 ## Cronjobs:
 
     Located in ~/Cron/*.sh
