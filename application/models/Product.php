@@ -392,7 +392,7 @@ and url like '%".$material."%' limit 1), 0) as traffic;"
     }
 
     var $table = 'sales';
-    var $column_order = array(null, 'sales.date', 'sales.material', 'sales.billingqty'); //set column field database for datatable orderable
+    var $column_order = array(null, 'sales.date', 'sales.material', 'customer_logs.name', 'sales.billingqty'); //set column field database for datatable orderable
     var $column_search = array('sales.date','sales.material', 'sales.billingqty'); //set column field database for datatable searchable
     var $order = array('date' => 'desc'); // default order
 

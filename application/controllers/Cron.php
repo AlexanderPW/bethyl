@@ -92,4 +92,11 @@ class Cron extends CI_Controller {
         exit;
     }
 
+    public function buildTrafficRelation() {
+        echo 'Building Traffic Relation Data. Do not STOP!';
+        $this->load->model('settings');
+        $this->settings->getTrafficRelationData();
+        echo '<br>All Done!';
+    }
+
 }
