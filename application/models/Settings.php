@@ -67,10 +67,10 @@ class Settings extends CI_Model
     private function getLastTrafficId() {
         $result = $this->db->query("
         select x.id, max(x.date) from
-        (select s.id, s.date, s.material, r.1day from sales s
+        (select s.id, s.date, s.material, r.one_day from sales s
         join traffic_relation r on
         s.id = r.`sales_id`
-        where r.1day = 1 order by s.id desc)x;"
+        where r.one_day = 1 order by s.id desc)x;"
         );
         $row = $result->result_array();
         return $row[0]['id'];
@@ -97,11 +97,30 @@ class Settings extends CI_Model
             }
     }
 
+    public function getTrafficRelationDataNull() {
+        ini_set('memory_limit', '1024M');
+        ini_set('max_execution_time', '900000');
+        $this->db->select('id, date, material');
+        $this->db->from('sales');
+        $this->db->join('traffic_relation', 'sales.id = traffic_relation.sales_id', 'left');
+        $this->db->where('traffic_relation.sales_id IS NULL');
+        $query = $this->db->get();
+        $i = 0;
+        while ($row = $query->unbuffered_row()) {
+            $this->setTrafficRelationData($row->id, $row->date, $row->material);
+            $i++;
+            if($i == 100) {
+                sleep(5);
+                $i = 0;
+            }
+        }
+    }
+
     public function setTrafficRelationData($id, $date, $material) {
         $this->load->model('product');
         $traffic = ($this->product->checkRelatedTraffic($date, $material) ? '1' : '0');
-        $this->db->query("INSERT INTO `traffic_relation` (sales_id, 1day) VALUES ('".$id."', '".$traffic."')
-        ON DUPLICATE KEY UPDATE 1day='".$traffic."';");
+        $this->db->query("INSERT INTO `traffic_relation` (sales_id, one_day) VALUES ('".$id."', '".$traffic."')
+        ON DUPLICATE KEY UPDATE one_day='".$traffic."';");
     }
 
 }

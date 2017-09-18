@@ -9,4 +9,7 @@ do
   rm $f
   php ../index.php cron import901Dir
 done
-
+echo "Building Traffic Relationships"
+php ../index.php cron buildTrafficRelation
+php ../index.php cron buildTrafficRelationNull
+echo "All Done..."

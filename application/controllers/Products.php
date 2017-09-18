@@ -53,7 +53,7 @@ class Products extends CI_Controller {
             $row[] = $products->material;
             $row[] = $products->name;
             $row[] = $products->billingqty;
-            $row[] = ($this->product->checkRelatedTraffic($products->date, $products->material)
+            $row[] = ($products->one_day
                 ? "<a class='modal-toggle' data-toggle='modal' data-target='#myModal' data-id='".$products->material."' data-date='".$products->date."'>View Traffic</a>" :
                 'Not Found');
             $data[] = $row;

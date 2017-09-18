@@ -394,10 +394,11 @@ and url like '%".$material."%' limit 1), 0) as traffic;"
     private function _get_datatables_query()
     {
 
-        $this->db->select('sales.date, sales.material, customer_logs.name, sales.billingqty');
+        $this->db->select('sales.date, sales.material, customer_logs.name, sales.billingqty, traffic_relation.one_day');
         $this->db->from($this->table);
-
         $this->db->join('customer_logs', 'customer_logs.customer_number = sales.soldtopt');
+        $this->db->join('traffic_relation', 'sales.id = traffic_relation.sales_id', 'left');
+        $this->db->where('sales.billingqty > 0');
         $i = 0;
 
         //Search Field

@@ -5,4 +5,7 @@ do
   echo "Processing $f file..."
   php ../index.php cron importiisdir
 done
-
+echo "Building Traffic Relationships"
+php ../index.php cron buildTrafficRelation
+php ../index.php cron buildTrafficRelationNull
+echo "All Done..."
