@@ -69,8 +69,10 @@ class File_iterator
                     'response'    => $entry->getResponseStatusCode(),
                     'time_taken'  => $entry->getTimeTaken()
                 );
-                $insert++;
-                $this->ci->iis_parser->insert($fields);
+                if(!$this->getExclusions($fields['url']) && !$this->getExclusionIP($fields['visiting_ip'])) {
+                    $insert++;
+                    $this->ci->iis_parser->insert($fields);
+                }
             }
 
             $this->ci->logger->IISLog($fileName, $insert);
@@ -198,6 +200,27 @@ class File_iterator
             return substr($result,0,$dd);
         }
         return null;
+    }
+
+    public function getExclusions($url){
+        $list = [
+            '.html','favicon','.pdf','.jpg','.jpeg','.gif','.png','.css','/api/','/css','.js','.json'
+        ];
+
+        foreach ($list as $val) {
+            if (strpos($url, $val) !== false) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function getExclusionIP($url){
+        $bethyl = '207.70.176.50';
+        if($bethyl == $url){
+            return true;
+        }
+        return false;
     }
 
 }

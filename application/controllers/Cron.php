@@ -106,4 +106,13 @@ class Cron extends CI_Controller {
         echo '<br>All Done!';
     }
 
+    public function test() {
+        $this->load->model('parsers/iis_parser');
+        $data = array(
+            'datetime' => '2017-05-05 00:00:00',
+            'campaign' => ' '
+        );
+        $this->iis_parser->insertCampaignData($data);
+        echo 'checked me';
+    }
 }

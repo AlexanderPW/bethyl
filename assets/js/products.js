@@ -5,6 +5,7 @@ var newTicks;
 var customerData;
 var $customerEventSelect = $("#product-sales-filter1");
 var $productEventSelect = $("#product-sales-filter2");
+var $groupEventSelect = $("#product-sales-filter-group");
 var product_table;
 var product_start;
 product_start = moment().startOf('month').format('YYYY-MM-DD');
@@ -12,6 +13,9 @@ var product_end;
 product_end = moment().endOf('month').format('YYYY-MM-DD');
 var customerId;
 var productId;
+var groupId;
+var trialVal;
+var dSearchVal;
 var date_label;
 var date_selector;
 var traffic_table;
@@ -508,13 +512,34 @@ function getProductList() {
     });
 }
 
+function getGroupList() {
+    $('#product-sales-filter-group').select2({
+        allowClear: true,
+        placeholder: 'Filter by Material Group',
+        ajax: {
+            url: '/products/getProductGroup',
+            dataType: 'json',
+            delay: 250,
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        }
+    });
+}
+
 function returnFilters() {
     var d;
     d = {
         'start_range' : product_start,
         'end_range' : product_end,
         'customer' : customerId,
-        'product' : productId
+        'product' : productId,
+        'group' : groupId,
+        'trial' : trialVal,
+        'dSearch' : dSearchVal
     }
     return d;
 }
@@ -527,6 +552,15 @@ JSON.stringify(evt.params, function (key, value) {
         });
 }
 
+function trialReturnVal (val) {
+        trialVal = '';
+        if(val) {
+        trialVal = val;
+        }
+        product_table.ajax.reload();
+        chartTypeSelect(date_selector);
+}
+
 function productReturnId (name, evt) {
     JSON.stringify(evt.params, function (key, value) {
         productId = value.data.id;
@@ -534,6 +568,19 @@ function productReturnId (name, evt) {
         chartTypeSelect(date_selector);
     });
 }
+
+function groupReturnId (name, evt) {
+    JSON.stringify(evt.params, function (key, value) {
+        groupId = value.data.id;
+        product_table.ajax.reload();
+        chartTypeSelect(date_selector);
+    });
+}
+
+function dSearchReturnVal (name) {
+        dSearchVal = name;
+        chartTypeSelect(date_selector);
+    };
 
 function clearCustomer() {
     customerId = '';
@@ -543,6 +590,12 @@ function clearCustomer() {
 
 function clearProduct() {
     productId = '';
+    product_table.ajax.reload();
+    chartTypeSelect(date_selector);
+}
+
+function clearGroup() {
+    groupId = '';
     product_table.ajax.reload();
     chartTypeSelect(date_selector);
 }
@@ -598,11 +651,13 @@ $(document).on('click', '[data-dismiss="modal"]', function () {
 
 $(document).ready(function() {
     //datatables
-    product_table = $('#product-sales').DataTable({
+    product_table = $('#product-sales')
+        .DataTable({
 
         "processing": true, //Feature control the processing indicator.
         "serverSide": true, //Feature control DataTables' server-side processing mode.
-        "order": [], //Initial no order.
+        "order": [], //Initial no order
+        "searchDelay": 1000,
 
         // Load data for the table's content from an Ajax source
         "ajax": {
@@ -624,7 +679,23 @@ $(document).ready(function() {
 
     });
 
+
+
+    //Search from Datatable
+   $("#product-sales_filter :input").on('keyup', function(e){
+       value = e.currentTarget.value;
+       dSearchReturnVal(value);
+    });
+
+
     init_daterangepicker_product();
+
+    //switchery
+    trialFilter = new Switchery(document.querySelector('#trial-filter'));
+    $('#trial-filter').on('click', function(e) {
+        val = e.currentTarget.checked;
+        trialReturnVal(val);
+    });
 
     //select2
     getCustomerList();
@@ -634,6 +705,10 @@ $(document).ready(function() {
     getProductList();
     $productEventSelect.on("select2:select", function (e) { productReturnId("select2:select", e); });
     $productEventSelect.on("select2:unselect", function (e) { clearProduct(); });
+
+    getGroupList();
+    $groupEventSelect.on("select2:select", function (e) { groupReturnId("select2:select", e); });
+    $groupEventSelect.on("select2:unselect", function (e) { clearGroup(); });
 });
 
 

@@ -66,6 +66,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<select id='product-sales-filter1'>
 				</select>
 			</div>
+			<div class="col-md-4 col-sm-12 col-xs-12">
+				<select id='product-sales-filter-group'>
+				</select>
+			</div>
+			<div class="col-md-4 col-sm-12 col-xs-12">
+				<label class="checkbox-switchery">
+				<input id="trial-filter" type="checkbox"  /> Filter for Trial Sizes
+				</label>
+			</div>
 		</div>
 
 	</div>
@@ -92,6 +101,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<th>No</th>
 				<th>Date</th>
 				<th>Product</th>
+				<th>Group</th>
 				<th>Customer</th>
 				<th>Quantity</th>
 				<th>Traffic</th>

@@ -19,7 +19,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link href="<?= base_url();?>bower_components/nprogress/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
     <link href="<?= base_url();?>bower_components/iCheck/skins/flat/green.css" rel="stylesheet">
-
+    <!-- Switchery -->
+	<link href="<?= base_url();?>bower_components/switchery/dist/switchery.min.css" rel="stylesheet">
     <!-- bootstrap-progressbar -->
     <link href="<?= base_url();?>bower_components/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
     <!-- JQVMap -->

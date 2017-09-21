@@ -61,7 +61,7 @@ class Traffic_model extends CI_Model
             $this->db->where('datetime <=', $_GET['end_range'].' 23:59:59');
             $this->db->like('campaign', $_GET['term']);
         }
-        $this->db->limit(10);
+        //$this->db->limit(10);
 
         $customers = $this->db->get();
 

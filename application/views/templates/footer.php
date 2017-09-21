@@ -43,7 +43,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?= base_url();?>bower_components/flot-spline/js/jquery.flot.spline.min.js"></script>
 <script src="<?= base_url();?>bower_components/flot.curvedlines/curvedLines.js"></script>
 <script src="<?= base_url();?>bower_components/flot.tooltip.pib/js/jquery.flot.tooltip.min.js"></script>
-
+<!-- Switchery -->
+<script src="<?= base_url();?>bower_components/switchery/dist/switchery.min.js"></script>
 <!-- DateJS -->
 <script src="<?= base_url();?>bower_components/DateJS/build/date.js"></script>
 <!-- JQVMap -->
