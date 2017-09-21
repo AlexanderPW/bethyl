@@ -54,13 +54,16 @@ class Traffic_model extends CI_Model
 
     public function getCampaigns() {
         $this->db->distinct();
-        $this->db->select('campaign AS id, campaign as text');
-        $this->db->from('iis_logs');
-        if (!empty($_GET['term']) && !empty($_GET['start_range']) && !empty($_GET['end_range'])) {
-            $this->db->where('datetime >=', $_GET['start_range'].' 00:00:00' );
-            $this->db->where('datetime <=', $_GET['end_range'].' 23:59:59');
+        $this->db->select('name AS id, name as text');
+        $this->db->from('campaigns');
+        $start = date('Y-m-01', strtotime($_GET['start_range']));
+        $end =  date('Y-m-01', strtotime($_GET['end_range']));
+        $this->db->where('date >=', $start);
+        $this->db->where('date <=', $end);
+        if (!empty($_GET['term'])) {
             $this->db->like('campaign', $_GET['term']);
         }
+
         //$this->db->limit(10);
 
         $customers = $this->db->get();
