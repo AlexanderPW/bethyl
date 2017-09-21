@@ -679,14 +679,11 @@ $(document).ready(function() {
 
     });
 
-
-
     //Search from Datatable
    $("#product-sales_filter :input").on('keyup', function(e){
        value = e.currentTarget.value;
        dSearchReturnVal(value);
     });
-
 
     init_daterangepicker_product();
 

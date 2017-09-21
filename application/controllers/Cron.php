@@ -93,26 +93,12 @@ class Cron extends CI_Controller {
     }
 
     public function buildTrafficRelation() {
-        echo 'Building Traffic Relation Data. Do not STOP!';
         $this->load->model('settings');
         $this->settings->getTrafficRelationData();
-        echo '<br>All Done!';
     }
 
     public function buildTrafficRelationNull() {
-        echo 'Building Traffic Relation Data. Do not STOP!';
         $this->load->model('settings');
         $this->settings->getTrafficRelationDataNull();
-        echo '<br>All Done!';
-    }
-
-    public function test() {
-        $this->load->model('parsers/iis_parser');
-        $data = array(
-            'datetime' => '2017-05-05 00:00:00',
-            'campaign' => ' '
-        );
-        $this->iis_parser->insertCampaignData($data);
-        echo 'checked me';
     }
 }

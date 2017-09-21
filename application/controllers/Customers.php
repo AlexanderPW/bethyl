@@ -52,6 +52,7 @@ class Customers extends CI_Controller {
             $row[] = $no;
             $row[] = date('M d, Y', strtotime($products->date));
             $row[] = $products->material;
+            $row[] = $products->matlgroup;
             $row[] = $products->name;
             $row[] = $products->billingqty;
             $row[] = ($products->one_day

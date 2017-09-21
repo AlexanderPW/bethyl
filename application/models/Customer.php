@@ -387,14 +387,14 @@ and url like '%".$material."%' limit 1), 0) as traffic;"
     }
 
     var $table = 'sales';
-    var $column_order = array(null, 'sales.date', 'sales.material', 'sales.billingqty'); //set column field database for datatable orderable
+    var $column_order = array(null, 'sales.date', 'sales.material', 'sales.matlgroup', 'customer_logs.name', 'sales.billingqty', 'traffic_relation.one_day'); //set column field database for datatable orderable
     var $column_search = array('sales.date','sales.material', 'sales.billingqty'); //set column field database for datatable searchable
     var $order = array('date' => 'desc'); // default order
 
     private function _get_datatables_query()
     {
 
-        $this->db->select('sales.date, sales.material, customer_logs.name, sales.billingqty, traffic_relation.one_day');
+        $this->db->select('sales.date, sales.material, sales.matlgroup,  customer_logs.name, sales.billingqty, traffic_relation.one_day');
         $this->db->from($this->table);
         $this->db->join('customer_logs', 'customer_logs.customer_number = sales.soldtopt');
         $this->db->join('traffic_relation', 'sales.id = traffic_relation.sales_id', 'left');
@@ -439,6 +439,16 @@ and url like '%".$material."%' limit 1), 0) as traffic;"
             $this->db->where('material =', $_POST['product']);
         }
 
+        //Group Field
+        if(!empty($_POST['group'])) {
+            $this->db->where('matlgroup =', $_POST['group']);
+        }
+
+        //Trial Field
+        if(!empty($_POST['trial'])) {
+            $this->db->where("material like '%-T'");
+        }
+
         //Ordering
         if(isset($_POST['order']))
         {
@@ -458,6 +468,15 @@ and url like '%".$material."%' limit 1), 0) as traffic;"
         }
         if(isset($_GET['product']) && !empty($_GET['product'])) {
             $wheres .= "and material = '".$_GET['product']."'";
+        }
+        if(isset($_GET['group']) && !empty($_GET['group'])) {
+            $wheres .= "and matlgroup = '" . $_GET['group'] . "'";
+        }
+        if(isset($_GET['dSearch']) && !empty($_GET['dSearch'])) {
+            $wheres .= "and material like '%".$_GET['dSearch']."%'";
+        }
+        if(isset($_GET['trial']) && !empty($_GET['trial'])) {
+            $wheres .= "and material like '%-T'";
         }
         return $wheres;
     }
