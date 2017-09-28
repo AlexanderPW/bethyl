@@ -206,9 +206,8 @@ class File_iterator
         $list = [
             '.html','favicon','.pdf','.jpg','.jpeg','.gif','.png','.css','/api/','/css','.js','.json'
         ];
-
         foreach ($list as $val) {
-            if (strpos($url, $val) !== false) {
+            if (stripos($url, $val) !== false) {
                 return true;
             }
         }
