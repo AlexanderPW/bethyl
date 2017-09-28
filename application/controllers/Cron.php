@@ -101,4 +101,18 @@ class Cron extends CI_Controller {
         $this->load->model('settings');
         $this->settings->getTrafficRelationDataNull();
     }
+
+    public function test() {
+        $this->load->library('file_iterator');
+        $fields = array(
+            'url'         => '.jpg',
+        );
+
+        if(!$this->file_iterator->getExclusions($fields['url'])) {
+            echo 'no exclusion';
+        }
+        else {
+            echo 'found exclusion';
+        }
+    }
 }
