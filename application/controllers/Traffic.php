@@ -79,6 +79,14 @@ class Traffic extends CI_Controller {
         echo json_encode($this->traffic_model->getCampaigns());
     }
 
+    public function getSource() {
+        echo json_encode($this->traffic_model->getSources());
+    }
+
+    public function getMedium() {
+        echo json_encode($this->traffic_model->getMediums());
+    }
+
     public function getCode() {
         echo json_encode($this->traffic_model->getCodes());
     }

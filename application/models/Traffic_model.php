@@ -61,7 +61,45 @@ class Traffic_model extends CI_Model
         $this->db->where('date >=', $start);
         $this->db->where('date <=', $end);
         if (!empty($_GET['term'])) {
-            $this->db->like('campaign', $_GET['term']);
+            $this->db->like('name', $_GET['term']);
+        }
+
+        //$this->db->limit(10);
+
+        $customers = $this->db->get();
+
+        return $customers->result_array();
+    }
+
+    public function getSources() {
+        $this->db->distinct();
+        $this->db->select('name AS id, name as text');
+        $this->db->from('campaign_source');
+        $start = date('Y-m-01', strtotime($_GET['start_range']));
+        $end =  date('Y-m-01', strtotime($_GET['end_range']));
+        $this->db->where('date >=', $start);
+        $this->db->where('date <=', $end);
+        if (!empty($_GET['term'])) {
+            $this->db->like('name', $_GET['term']);
+        }
+
+        //$this->db->limit(10);
+
+        $customers = $this->db->get();
+
+        return $customers->result_array();
+    }
+
+    public function getMediums() {
+        $this->db->distinct();
+        $this->db->select('name AS id, name as text');
+        $this->db->from('campaign_medium');
+        $start = date('Y-m-01', strtotime($_GET['start_range']));
+        $end =  date('Y-m-01', strtotime($_GET['end_range']));
+        $this->db->where('date >=', $start);
+        $this->db->where('date <=', $end);
+        if (!empty($_GET['term'])) {
+            $this->db->like('name', $_GET['term']);
         }
 
         //$this->db->limit(10);
@@ -379,15 +417,15 @@ and url like '%".$material."%' limit 1), 0) as traffic;"
             $this->db->where('il.campaign', $_POST['campaign']);
         }
 
-        //Code Field
+        //SOURCE was Code Field
         if(!empty($_POST['code'])) {
-            $this->db->where('il.response', $_POST['code']);
+            $this->db->where('il.source', $_POST['code']);
         }
 
-        //Time Field
+        //medium was Time Field
         if(!empty($_POST['time'])) {
             $time = $_POST['time'];
-            $this->db->where("il.time_taken between $time");
+            $this->db->where('il.medium', $time);
         }
 
         //Ordering
@@ -413,12 +451,16 @@ and url like '%".$material."%' limit 1), 0) as traffic;"
         if(isset($_GET['campaign']) && !empty($_GET['campaign'])) {
             $wheres .= "and campaign = '".$_GET['campaign']."'";
         }
+
+        //changed to source
         if(isset($_GET['code']) && !empty($_GET['code'])) {
-            $wheres .= "and response = '".$_GET['code']."'";
+            $wheres .= "and source = '".$_GET['code']."'";
         }
+
+        //changed to medium
         if(isset($_GET['time']) && !empty($_GET['time'])) {
             $time = $_GET['time'];
-            $wheres .= "and time_taken between $time";
+            $wheres .= "and medium = '".$_GET['time']."'";
         }
         return $wheres;
     }

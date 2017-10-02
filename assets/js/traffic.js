@@ -10,9 +10,9 @@ var $codeEventSelect = $("#traffic-sales-filter4");
 var $timeEventSelect = $("#traffic-sales-filter5");
 var product_table;
 var product_start;
-product_start = moment().startOf('month').format('YYYY-MM-DD');
+product_start = moment().subtract(6, 'days').format('YYYY-MM-DD');
 var product_end;
-product_end = moment().endOf('month').format('YYYY-MM-DD');
+product_end = moment().format('YYYY-MM-DD');
 var customerId;
 var referrerId;
 var campaignId;
@@ -166,6 +166,9 @@ function init_daterangepicker_product() {
             firstDay: 1
         }
     };
+
+    //product_start = moment().subtract(6, 'days');
+    //product_end = moment();
 
     $('#product_date_selector span').html(moment().subtract(6, 'days').format('MMMM D, YYYY') + ' - ' +moment().format('MMMM D, YYYY'));
 
@@ -480,9 +483,9 @@ function getCampaignList() {
 function getCodeList() {
     $('#traffic-sales-filter4').select2({
         allowClear: true,
-        placeholder: 'Filter by Reponse Code',
+        placeholder: 'Filter by Campaign Source',
         ajax: {
-            url: '/traffic/getcode',
+            url: '/traffic/getsource',
             data: function (d) {
                 Object.assign(d, returnFilters());
                 return d;
@@ -502,9 +505,9 @@ function getCodeList() {
 function getTimeList() {
     $('#traffic-sales-filter5').select2({
         allowClear: true,
-        placeholder: 'Filter by Reponse Time (ms)',
+        placeholder: 'Filter by Campaign Medium',
         ajax: {
-            url: '/traffic/gettime',
+            url: '/traffic/getmedium',
             data: function (d) {
                 Object.assign(d, returnFilters());
                 return d;
@@ -697,10 +700,12 @@ $(document).ready(function() {
     $campaignEventSelect.on("select2:select", function (e) { campaignReturnId("select2:select", e); });
     $campaignEventSelect.on("select2:unselect", function (e) { clearCampaign(); });
 
+    //changed to source
     getCodeList();
     $codeEventSelect.on("select2:select", function (e) { codeReturnId("select2:select", e); });
     $codeEventSelect.on("select2:unselect", function (e) { clearCode(); });
 
+    //changed to medium
     getTimeList();
     $timeEventSelect.on("select2:select", function (e) { timeReturnId("select2:select", e); });
     $timeEventSelect.on("select2:unselect", function (e) { clearTime(); });
