@@ -361,14 +361,14 @@ and url like '%".$material."%' limit 1), 0) as traffic;"
     }
 
     var $table = 'iis_logs as il';
-    var $column_order = array(null, 'date', 'url', 'campaign', 'ip', 'customer'); //set column field database for datatable orderable
+    var $column_order = array(null, 'date', 'url', 'campaign', 'source', 'medium', 'ip', 'customer'); //set column field database for datatable orderable
     var $column_search = array('date', 'url', 'campaign', 'ip', 'customer'); //set column field database for datatable searchable
     var $order = array('date' => 'desc'); // default order
 
     private function _get_datatables_query()
     {
 
-        $this->db->select("date_format(il.datetime, '%Y-%m-%d') as 'date', il.url as url, il.campaign as campaign, il.visiting_ip as ip, ci.customer as customer");
+        $this->db->select("date_format(il.datetime, '%Y-%m-%d') as 'date', il.url as url, il.campaign as campaign, il.source as source, il.medium as medium, il.visiting_ip as ip, ci.customer as customer");
         $this->db->from($this->table);
 
         $this->db->join('customer_ip as ci', 'ci.ip = il.visiting_ip', 'left');

@@ -104,6 +104,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<th>Date</th>
 				<th>Url</th>
 				<th>Campaign</th>
+				<th>Source</th>
+				<th>Medium</th>
 				<th>IP</th>
 				<th>Customer</th>
 			</tr>

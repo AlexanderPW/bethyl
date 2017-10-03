@@ -51,6 +51,8 @@ class Traffic extends CI_Controller {
             $row[] = date('M d, Y', strtotime($traffic->date));
             $row[] = ($traffic->url ? $traffic->url : '-');
             $row[] = ($traffic->campaign ? $traffic->campaign : '-');
+            $row[] = ($traffic->source ? $traffic->source : '-');
+            $row[] = ($traffic->medium ? $traffic->medium : '-');
             $row[] = ($traffic->ip ? $traffic->ip : '-');
             $row[] = ($traffic->customer ? $traffic->customer : '-');
             $data[] = $row;
