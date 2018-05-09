@@ -67,9 +67,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                 if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)) {
                     $count = $this->file_iterator->importIIS($fileName);
-                    $this->load->model('cron');
-                    $this->cron->buildTrafficRelation();
-                    $this->cron->buildTrafficRelationNull();
+                    $this->buildTrafficRelation();
+                    $this->buildTrafficRelationNull();
                 }
                 //response back to view
                echo json_encode(array('count' => $count, 'insert' => $count));
@@ -133,9 +132,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     $csvName = $fileName.'.csv';
                     $count = $this->file_iterator->import901($csvName, $targetDir);
                     $this->file_iterator->moveComplete($targetFile, $destination);
-                    $this->load->model('cron');
-                    $this->cron->buildTrafficRelation();
-                    $this->cron->buildTrafficRelationNull();
+                    $this->buildTrafficRelation();
+                    $this->buildTrafficRelationNull();
                 }
                 //response back to view
                 echo json_encode(array('count' => $count, 'insert' => $count));
@@ -177,6 +175,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             public function getTrafficOption() {
                 $this->load->model('settings');
                 return $this->settings->getTrafficOptions();
+            }
+
+            public function buildTrafficRelation() {
+                $this->load->model('settings');
+                $this->settings->getTrafficRelationData();
+            }
+
+            public function buildTrafficRelationNull() {
+                $this->load->model('settings');
+                $this->settings->getTrafficRelationDataNull();
             }
 }
 
