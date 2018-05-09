@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 use Gumbercules\IisLogParser\LogFile;
 
-class File_iterator
+class Fileiterator
 {
 
     var $ci;

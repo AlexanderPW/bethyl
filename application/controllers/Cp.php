@@ -61,12 +61,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $targetDir  = $this->settings->getPath('iis-location');
                 $fileName   = str_replace(' ', '_', $_FILES['file']['name']);
                 $targetFile = $targetDir .'/'. $fileName;
-                $this->load->library('file_iterator');
+                $this->load->library('fileiterator');
                 $count = 0;
                 $fields = null;
 
                 if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)) {
-                    $count = $this->file_iterator->importIIS($fileName);
+                    $count = $this->fileiterator->importIIS($fileName);
                     $this->buildTrafficRelation();
                     $this->buildTrafficRelationNull();
                 }
@@ -81,15 +81,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $fileName   = str_replace(' ', '_', $_FILES['file']['name']);
                 $destination = FCPATH."upload/complete/kna_logs/".$fileName;
                 $targetFile = $targetDir .'/'. $fileName;
-                $this->load->library('file_iterator');
+                $this->load->library('fileiterator');
                 $count = 0;
                 $fields = null;
 
                 if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)) {
                     exec($this->settings->getPath('ssconvert')." ".$targetFile." ".$targetFile.".csv 2>&1", $output);
                     $csvName = $fileName.'.csv';
-                    $count = $this->file_iterator->importKNA($csvName, $targetDir);
-                    $this->file_iterator->moveComplete($targetFile, $destination);
+                    $count = $this->fileiterator->importKNA($csvName, $targetDir);
+                    $this->fileiterator->moveComplete($targetFile, $destination);
                 }
                 //response back to view
                 echo json_encode(array('count' => $count, 'insert' => $count));
@@ -102,15 +102,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $fileName   = str_replace(' ', '_', $_FILES['file']['name']);
                 $destination = FCPATH."upload/complete/mara_logs/".$fileName;
                 $targetFile = $targetDir .'/'. $fileName;
-                $this->load->library('file_iterator');
+                $this->load->library('fileiterator');
                 $count = 0;
                 $fields = null;
 
                 if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)) {
                     exec($this->settings->getPath('ssconvert')." ".$targetFile." ".$targetFile.".csv 2>&1", $output);
                     $csvName = $fileName.'.csv';
-                    $count = $this->file_iterator->importMara($csvName, $targetDir);
-                    $this->file_iterator->moveComplete($targetFile, $destination);
+                    $count = $this->fileiterator->importMara($csvName, $targetDir);
+                    $this->fileiterator->moveComplete($targetFile, $destination);
                 }
                 //response back to view
                 echo json_encode(array('count' => $count, 'insert' => $count));
@@ -123,15 +123,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $fileName   = str_replace(' ', '_', $_FILES['file']['name']);
                 $destination = FCPATH."upload/complete/901_logs/".$fileName;
                 $targetFile = $targetDir .'/'. $fileName;
-                $this->load->library('file_iterator');
+                $this->load->library('fileiterator');
                 $count = 0;
                 $fields = null;
 
                 if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)) {
                     exec($this->settings->getPath('ssconvert')." ".$targetFile." ".$targetFile.".csv 2>&1", $output);
                     $csvName = $fileName.'.csv';
-                    $count = $this->file_iterator->import901($csvName, $targetDir);
-                    $this->file_iterator->moveComplete($targetFile, $destination);
+                    $count = $this->fileiterator->import901($csvName, $targetDir);
+                    $this->fileiterator->moveComplete($targetFile, $destination);
                     $this->buildTrafficRelation();
                     $this->buildTrafficRelationNull();
                 }
@@ -146,15 +146,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $fileName   = str_replace(' ', '_', $_FILES['file']['name']);
                 $destination = FCPATH."upload/complete/ip_logs/".$fileName;
                 $targetFile = $targetDir .'/'. $fileName;
-                $this->load->library('file_iterator');
+                $this->load->library('fileiterator');
                 $count = 0;
                 $fields = null;
 
                 if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)) {
                     exec($this->settings->getPath('ssconvert')." ".$targetFile." ".$targetFile.".csv 2>&1", $output);
                     $csvName = $fileName.'.csv';
-                    $count = $this->file_iterator->importIp($csvName, $targetDir);
-                    $this->file_iterator->moveComplete($targetFile, $destination);
+                    $count = $this->fileiterator->importIp($csvName, $targetDir);
+                    $this->fileiterator->moveComplete($targetFile, $destination);
                 }
                 //response back to view
                 echo json_encode(array('count' => $count, 'insert' => $count));
