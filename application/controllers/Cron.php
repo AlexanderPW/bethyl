@@ -7,8 +7,8 @@ class Cron extends CI_Controller {
         echo "Begin processing \n";
         $this->load->model('settings');
         $path = $this->settings->getPath('iis-location');
-        $this->load->library('Fileiterator');
-        $this->Fileiterator->iterateIIS($path);
+        $this->load->library('fileiterator');
+        $this->fileiterator->iterateIIS($path);
     }
 
     public function getIisPath() {
@@ -33,8 +33,8 @@ class Cron extends CI_Controller {
         echo "Begin processing \n";
         $this->load->model('settings');
         $path = $this->settings->getPath('kna-location');
-        $this->load->library('Fileiterator');
-        $this->Fileiterator->iterateKNA($path);
+        $this->load->library('fileiterator');
+        $this->fileiterator->iterateKNA($path);
         exit;
     }
 
@@ -51,8 +51,8 @@ class Cron extends CI_Controller {
         echo "Begin processing \n";
         $this->load->model('settings');
         $path = $this->settings->getPath('mara-location');
-        $this->load->library('Fileiterator');
-        $this->Fileiterator->iterateMara($path);
+        $this->load->library('fileiterator');
+        $this->fileiterator->iterateMara($path);
         exit;
     }
 
@@ -69,8 +69,8 @@ class Cron extends CI_Controller {
         echo "Begin processing \n";
         $this->load->model('settings');
         $path = $this->settings->getPath('sales-location');
-        $this->load->library('Fileiterator');
-        $this->Fileiterator->iterate901($path);
+        $this->load->library('fileiterator');
+        $this->fileiterator->iterate901($path);
         exit;
     }
 
@@ -87,8 +87,8 @@ class Cron extends CI_Controller {
         echo "Begin processing \n";
         $this->load->model('settings');
         $path = $this->settings->getPath('ip-location');
-        $this->load->library('Fileiterator');
-        $this->Fileiterator->iterateIp($path);
+        $this->load->library('fileiterator');
+        $this->fileiterator->iterateIp($path);
         exit;
     }
 
@@ -103,12 +103,12 @@ class Cron extends CI_Controller {
     }
 
     public function test() {
-        $this->load->library('Fileiterator');
+        $this->load->library('fileiterator');
         $fields = array(
             'url'         => '.jpg',
         );
 
-        if(!$this->Fileiterator->getExclusions($fields['url'])) {
+        if(!$this->fileiterator->getExclusions($fields['url'])) {
             echo 'no exclusion';
         }
         else {
