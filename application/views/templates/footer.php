@@ -61,7 +61,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <script src="<?= base_url();?>assets/js/charts.js"></script>
 <?php if (isset($script)) {
-if(count($script) > 1) {
+if(count((array)$script) > 1) {
 	foreach ($script as $s) {
         echo $s;
 	}
