@@ -40,7 +40,7 @@ class Settings extends CI_Model
         $this->db->where('var', 'trafficDays');
         $optVal = $this->db->get()->row();
 
-        $select = '';
+        $select = [];
         $opGroup = array(
             '1' => 'One Day',
             '2' => 'Two Days',
