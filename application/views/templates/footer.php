@@ -32,11 +32,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!-- Skycons -->
 <script src="<?= base_url();?>bower_components/skycons/skycons.js"></script>
 <!-- Flot -->
-<script src="<?= base_url();?>bower_components/Flot/jquery.flot.js"></script>
-<script src="<?= base_url();?>bower_components/Flot/jquery.flot.pie.js"></script>
-<script src="<?= base_url();?>bower_components/Flot/jquery.flot.time.js"></script>
-<script src="<?= base_url();?>bower_components/Flot/jquery.flot.stack.js"></script>
-<script src="<?= base_url();?>bower_components/Flot/jquery.flot.resize.js"></script>
+<script src="<?= base_url();?>bower_components/flot/jquery.flot.js"></script>
+<script src="<?= base_url();?>bower_components/flot/jquery.flot.pie.js"></script>
+<script src="<?= base_url();?>bower_components/flot/jquery.flot.time.js"></script>
+<script src="<?= base_url();?>bower_components/flot/jquery.flot.stack.js"></script>
+<script src="<?= base_url();?>bower_components/flot/jquery.flot.resize.js"></script>
 <script src="<?= base_url();?>assets/js/jquery.flot.time.js"></script>
 <!-- Flot plugins -->
 <script src="<?= base_url();?>bower_components/flot.orderbars/js/jquery.flot.orderBars.js"></script>
