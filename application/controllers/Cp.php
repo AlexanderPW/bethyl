@@ -65,6 +65,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $count = 0;
                 $fields = null;
 
+                echo json_encode(array('count' => '1', 'insert' => '1'));
+                return;
+
                 if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)) {
                     $count = $this->fileiterator->importIIS($fileName);
                     $this->buildTrafficRelation();

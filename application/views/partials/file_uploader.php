@@ -19,13 +19,14 @@ thumbnailHeight: 80,
 parallelUploads: 1,
 previewTemplate: previewTemplate,
 autoQueue: false, // Make sure the files aren't queued until manually added
-error: function(file, response) {
-    console.log('Upload Error!');
-    console.log('response');
-},
 previewsContainer: "#previews-<?=$mod_class?>", // Define the container to display the previews
 clickable: ".fileinput-button-<?=$mod_class;?>", // Define the element that should be used as click trigger to select files.
 });
+
+<?=$mod_class;?>.on("error", function(file, response) {
+    console.log(response);
+});
+
 
 <?=$mod_class;?>.on("success", function(file, response) {
 var responseJSON = $.parseJSON(response);
