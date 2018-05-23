@@ -23,11 +23,6 @@ previewsContainer: "#previews-<?=$mod_class?>", // Define the container to displ
 clickable: ".fileinput-button-<?=$mod_class;?>", // Define the element that should be used as click trigger to select files.
 });
 
-<?=$mod_class;?>.on("error", function(file, response) {
-    console.log(response);
-});
-
-
 <?=$mod_class;?>.on("success", function(file, response) {
 var responseJSON = $.parseJSON(response);
 $(".progress-striped-<?=$mod_class;?>").html("Successfully Imported "+responseJSON.insert
