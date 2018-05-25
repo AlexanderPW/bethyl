@@ -66,11 +66,11 @@ class Settings extends CI_Model
 
     private function getLastTrafficId() {
         $result = $this->db->query("
-        select x.id, max(x.date) from
+        select x.id  from
         (select s.id, s.date, s.material, r.one_day from sales s
         join traffic_relation r on
         s.id = r.`sales_id`
-        where r.one_day = 1 order by s.id desc)x;"
+        where r.one_day = 1 order by s.id desc)x limit 1;"
         );
         $row = $result->result_array();
         return $row[0]['id'];
